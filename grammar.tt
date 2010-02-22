@@ -1,0 +1,21 @@
+grammar Scheme
+  rule atom
+    variable / integer
+  end
+
+  rule variable
+    [a-z]+ {
+      def eval(env)
+        env[text_value]
+      end
+    }
+  end
+
+  rule integer
+    ('0' / [1-9] [0-9]*) {
+      def eval
+        text_value.to_i
+      end
+    }
+  end
+end
