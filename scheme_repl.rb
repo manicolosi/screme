@@ -16,7 +16,8 @@ class SchemeRepl
 
   def run
     while line = Readline.readline('repl> ', true)
-      display_result(eval(line))
+      line = line.strip
+      display_result(eval(line)) unless line.empty?
     end
 
     puts
@@ -39,6 +40,6 @@ class SchemeRepl
 end
 
 env = {'x' => 2, 'y' => 3,
-       'theresa' => 15, 'test' => 12,
+       'theresa' => 'cute', 'test' => 12,
        '+' => 2+3, 'string->int' => 42}
 SchemeRepl.new(env).run

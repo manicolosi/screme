@@ -8,7 +8,7 @@ grammar Scheme
   end
 
   rule atom
-    integer / identifier
+    integer / string / identifier
   end
 
   rule identifier
@@ -23,6 +23,14 @@ grammar Scheme
     ('0' / [1-9] [0-9]*) {
       def eval(env={})
         text_value.to_i
+      end
+    }
+  end
+
+  rule string
+    '"' inner:('\\"' / [^"])* '"' {
+      def eval(env={})
+        inner.text_value.gsub(/\\"/, '"')
       end
     }
   end

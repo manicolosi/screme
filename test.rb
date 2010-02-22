@@ -18,7 +18,17 @@ class TestCase < Test::Unit::TestCase
     assert_equal 123, parse("123").eval
   end
 
-  def test_variable
+  def test_string
+    assert_equal 'basic string', parse('"basic string"').eval
+
+    assert_equal 'Testing inside quotes: "',
+      parse('"Testing inside quotes: \""').eval
+
+    assert_equal "Hitch Hiker's Guide to the Galaxy",
+      parse('hhgttg').eval({'hhgttg' => "Hitch Hiker's Guide to the Galaxy"})
+  end
+
+  def test_identifier
     assert_equal 3, parse("x").eval({'x' => 3})
   end
 
