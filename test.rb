@@ -21,4 +21,9 @@ class TestCase < Test::Unit::TestCase
   def test_variable
     assert_equal 3, parse("x").eval({'x' => 3})
   end
+
+  def test_whitespace
+    assert_equal 123, parse(" 123 ").eval
+    assert_equal 3, parse(" x ").eval({'x' => 3})
+  end
 end
