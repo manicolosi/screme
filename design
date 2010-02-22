@@ -1,0 +1,53 @@
+Ruby Scheme aims to be an implementation of Scheme (what version of the
+standard or are we aiming at the standard at all?). What sets it apart
+from other Ruby Schemes is it's ability to interop with Ruby, Clojure
+style.
+
+Like in Clojure native Ruby methods can be called on builtin types:
+
+(.join '("Hello" "world") " ") ; ["Hello", "world"].join(" ")
+
+The aim should be to encourage side effect free programming (i.e.
+immutability).
+
+## Simple Beginning ##
+
+The interpreted should be able to evaluate a single atom expression and
+return that atom as it's value.
+
+1
+=> 1
+
+We should start by wrapping everything in Ruby data-structs to avoid
+having to worry about parsing.
+
+## Next step #
+
+Next up is pairs or a cons. Each Cons has a Car and a Cdr:
+
+'(a)     ; car = a, cdr = nil
+'(a b)   ; car = a, cdr = (b)
+'(a b c) ; car = a, cdr = (b c)
+
+Every Cdr is a Cons, too.
+
+## Types ##
+
+### Basic types ###
+
+1     ; Integer
+"str" ; String
+'sym  ; Symbol
+'(a b c) ; List of ?
+nil   ; NicClass
+#t    ; TrueClass
+#f    ; FalseClass
+
+
+### Advanced types ###
+
+3.14   ; Float
+/re/   ; Regexp
+1..10  ; Range
+1...10 ; Range
+

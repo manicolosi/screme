@@ -38,5 +38,7 @@ class SchemeRepl
   end
 end
 
-env = {'x' => 2, 'y' => 3, 'theresa' => 15, 'test' => 12}
+env = {'x' => 2, 'y' => 3,
+       'theresa' => 15, 'test' => 12,
+       '+' => 2+3, 'string->int' => 42}
 SchemeRepl.new(env).run

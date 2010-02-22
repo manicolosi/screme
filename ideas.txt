@@ -1,0 +1,108 @@
+;; Car & Cdr
+
+first will be aliased to car and rest wll be aliased to cdr
+
+;; Keyword parameters (somehow)
+
+; Clojure-style without parameter destructuring.
+
+; If this were real it might make more sense for the content (first arg)
+; to go last to make nesting more natural.
+(to-html
+  (anchor {'href "/users/manico"
+           'title "User profile"
+           'class "user"}
+          "manico"))
+; => "<a href="/users/manico" title="User profile" ; class="user">manico</a>
+
+(defn anchor (params content)
+  (let ((href (:href params))
+        (title (:title params))
+        (klass (:class params)))
+    ...))
+
+; For hashes the destructuring syntax knows how to match-up based on the
+; names of the destructuring variable names (or whatever).
+(defn anchor ((href title klass) params content)
+  ...)
+
+(keys {'a "apple" 'b "banana" 'c "cake"})
+; => (a b c)
+
+(keys {'a "apple" 'b "banana" 'c "cake"} '(a b))
+; => (a b)
+
+;; Type calling behavior
+
+; Call behavior for lists:
+(lst n) ; (nth lst n)
+; Call behavior for hashes:
+(hsh key) ; (get hsh key)
+
+
+;; Meta-data
+
+; Meta-data pairs can be attached to anything defined (or bound?)
+
+(define a 1)
+(define a :doc "doc string" 1)
+
+; defn provides a nicer look on this but might be nasty if we want a
+; function to only return a string...?
+(defn fib (n)
+  "Returns the `n'th number in the Fibonacci sequence."
+  (...))
+
+
+;; Syntax for objects
+
+42
+3.14
+#t
+#f
+'symbol
+"a string"
+/regex/
+(a b c)                            ; Needs to be quoted
+{1 "one" 2 "two"}                  ; Hash table
+["apples" "oranges" "bananas"]     ; Vector/array
+
+;; Unit Testing
+
+(deftest geometry-test
+  (should (= 25 (area '(5 5)))
+          (= 20 (peri '(5 5)))))
+
+; We don't have to worry about setup/teardown, because objects are
+; immutable. So a simple let will do:
+(defcontext rect-test
+  "A 5x5 rectangle"
+  ((rect '(5 5))) ; Double parens are ugly
+  (should "have an area of 25"
+          (= 25 (area rect)))
+  (should "have a perimeter of 20"
+          (= 20 (peri rect))))
+
+; Usage:
+(defcontext description (let-forms*) should-forms*)
+
+: Macro expand:
+(define rect-test
+  (println "A 5x5 rectangle")
+  (let ((rect '(5 5)))
+    (do
+      (should "have an area of 25"
+              (= 25 (area rect)))
+      (should "have an perimeter of 20"
+              (= 20 (peri (rect)))))))
+              
+
+; Usage:
+(should description assertion)
+
+; Macro expand:
+(println " have an area of 25"
+         ": "
+         (if (assertion) "PASS" "FAIL"))
+
+

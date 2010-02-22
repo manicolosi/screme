@@ -1,6 +1,6 @@
 grammar Scheme
   rule expression
-    ws atom ws {
+    ws* atom ws* {
       def eval(env={})
         atom.eval(env)
       end
@@ -8,11 +8,11 @@ grammar Scheme
   end
 
   rule atom
-    integer / variable
+    integer / identifier
   end
 
-  rule variable
-    [a-z]+ {
+  rule identifier
+    (!ws .)+ {
       def eval(env={})
         env[text_value]
       end
@@ -28,6 +28,6 @@ grammar Scheme
   end
 
   rule ws
-    [ \t\n]*
+    [ \t\n]
   end
 end
