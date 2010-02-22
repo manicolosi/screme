@@ -28,6 +28,6 @@ grammar Scheme
   end
 
   rule ws
-    [ \t]*
+    [ \t\n]*
   end
 end
