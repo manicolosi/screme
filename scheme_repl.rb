@@ -16,8 +16,12 @@ class SchemeRepl
 
   def run
     while line = Readline.readline('repl> ', true)
-      line = line.strip
-      display_result(eval(line)) unless line.empty?
+      begin
+        line = line.strip
+        display_result(eval(line)) unless line.empty?
+      rescue Exception => e
+        puts "Error: #{e.inspect}"
+      end
     end
 
     puts
