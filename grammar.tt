@@ -1,6 +1,14 @@
 grammar Scheme
+  rule program
+    expression+ {
+      def eval(env={})
+        elements.map {|e| e.eval(env)}.last
+      end
+    }
+  end
+
   rule expression
-    ws* atom ws* {
+    space atom space {
       def eval(env={})
         atom.eval(env)
       end
@@ -12,7 +20,7 @@ grammar Scheme
   end
 
   rule identifier
-    (!ws .)+ {
+    (!delim .)+ {
       def eval(env={})
         env[text_value]
       end
@@ -33,6 +41,18 @@ grammar Scheme
         inner.text_value.gsub(/\\"/, '"')
       end
     }
+  end
+
+  rule delim
+    ws / paren
+  end
+
+  rule paren
+    [\(\)]
+  end
+
+  rule space
+    ws*
   end
 
   rule ws
