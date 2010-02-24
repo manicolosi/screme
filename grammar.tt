@@ -16,13 +16,30 @@ grammar Scheme
   end
 
   rule atom
-    integer / string / identifier
+    list / integer / string / identifier
+  end
+
+  rule list
+    '(' expression* ')' {
+      def eval(env={})
+        inner_expr = elements[1]
+
+        fn = inner_expr.elements.first.eval(env)
+        args = inner_expr.elements[1..-1].map {|e| e.eval(env)}
+
+        fn.call *args
+      end
+    }
   end
 
   rule identifier
     (!delim .)+ {
       def eval(env={})
-        env[text_value]
+        if env.member? text_value
+          env[text_value]
+        else
+          raise "Variable \"#{text_value}\" is not bound."
+        end
       end
     }
   end

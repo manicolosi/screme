@@ -43,7 +43,10 @@ class SchemeRepl
   end
 end
 
-env = {'x' => 2, 'y' => 3,
-       'theresa' => 'cute', 'test' => 12,
-       '+' => 2+3, 'string->int' => 42}
+env = { 'x' => 2, 'y' => 3,
+        'theresa' => 'cute', 'test' => 12,
+        '+' => proc {|a, b| a + b},
+        '*' => proc {|a, b| a * b}
+      }
+
 SchemeRepl.new(env).run

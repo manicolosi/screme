@@ -42,7 +42,16 @@ class TestCase < Test::Unit::TestCase
     assert_equal 3, parse(" x ").eval({'x' => 3})
   end
 
-  def test_program_rule
+  def test_multiple_expressions_return_the_last_expression_evaluated
     assert_equal 3, parse("1 2 3").eval
+  end
+
+  def test_lists_are_recognized
+    assert_not_nil parse("(a b c)")
+  end
+
+  def test_lists_are_evaluated
+    @env = { '+' => proc {|a, b| a + b}, 'b' => 1, 'c' => 2 }
+    assert_equal 3, parse("(+ b c)").eval(@env)
   end
 end
