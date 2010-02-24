@@ -32,8 +32,17 @@ class TestCase < Test::Unit::TestCase
     assert_equal 3, parse("x").eval({'x' => 3})
   end
 
+  def test_identifiers_cant_contain_parenthesis
+    assert_nil parse("a(c")
+    assert_nil parse("a)c")
+  end
+
   def test_whitespace
     assert_equal 123, parse(" 123 ").eval
     assert_equal 3, parse(" x ").eval({'x' => 3})
+  end
+
+  def test_program_rule
+    assert_equal 3, parse("1 2 3").eval
   end
 end
