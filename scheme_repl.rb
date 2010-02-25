@@ -22,7 +22,7 @@ class Function < Proc
     end
 
     Function.new do |*args|
-      env2 = { params[0] => args[0], params[1] => args[1] }.merge(env)
+      env2 = env.merge({ params[0] => args[0], params[1] => args[1] })
       body.eval(env2)
     end
   end
