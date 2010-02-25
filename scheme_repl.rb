@@ -4,6 +4,40 @@ require 'pp'
 
 Treetop.load 'grammar.tt'
 
+class Function < Proc
+  def initialize(params = nil, body = nil, &block)
+    if block_given?
+      super(&block)
+    else
+      super do |env, *args|
+        env2 = { params[0] => args[0], params[1] => args[1] }
+        body.eval(env2)
+      end
+    end
+  end
+
+  def self.lambda(env, params, body)
+    params = params.elements[1].elements[1].elements.map do |param|
+      param.elements[1].text_value
+    end
+
+    Function.new do |*args|
+      env2 = { params[0] => args[0], params[1] => args[1] }.merge(env)
+      body.eval(env2)
+    end
+  end
+
+  def apply(env, *args)
+    call *args.map {|a| a.eval(env)}
+  end
+end
+
+class Syntax < Proc
+  def apply(env, *args)
+    call env, *args
+  end
+end
+
 class SchemeRepl
   def initialize(env)
     @env = env
@@ -21,6 +55,7 @@ class SchemeRepl
         display_result(eval(line)) unless line.empty?
       rescue Exception => e
         puts "Error: #{e.inspect}"
+        puts e.backtrace
       end
     end
 
@@ -43,10 +78,16 @@ class SchemeRepl
   end
 end
 
-env = { 'x' => 2, 'y' => 3,
-        'theresa' => 'cute', 'test' => 12,
-        '+' => proc {|a, b| a + b},
-        '*' => proc {|a, b| a * b}
+env = { '+' => Function.new {|a, b| a + b},
+        '*' => Function.new {|a, b| a * b},
+        '=' => Function.new {|a, b| a == b},
+        'env' => Syntax.new {|env| pp env},
+        'define' => Syntax.new do |env, identifier, expression|
+          env[identifier.elements[1].text_value] = expression.eval(env)
+        end,
+        'lambda' => Syntax.new do |env, params, body|
+          Function.lambda(env, params, body)
+        end
       }
 
 SchemeRepl.new(env).run

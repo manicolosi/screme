@@ -25,9 +25,9 @@ grammar Scheme
         inner_expr = elements[1]
 
         fn = inner_expr.elements.first.eval(env)
-        args = inner_expr.elements[1..-1].map {|e| e.eval(env)}
+        args = inner_expr.elements[1..-1]
 
-        fn.call *args
+        fn.apply env, *args
       end
     }
   end
