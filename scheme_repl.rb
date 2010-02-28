@@ -1,5 +1,6 @@
 require 'treetop'
 require 'readline'
+require 'pp'
 
 require 'function'
 require 'syntax'
@@ -17,11 +18,23 @@ class SchemeRepl
   end
 
   def run
-    while line = Readline.readline('repl> ', true)
+    reset_prompt
+
+    while line = Readline.readline(@prompt, true)
       begin
-        line = line.strip
-        display_result(eval(line)) unless line.empty?
+        @lines << line
+        input = @lines.join("\n")
+        lparens, rparens = *count_parens(input)
+        if lparens == rparens
+          reset_prompt
+          display_result(eval(input))
+        elsif lparens > rparens
+          @prompt = "*...>    "
+        else
+          raise 'Unexpected right parenthesis.'
+        end
       rescue Exception => e
+        reset_prompt
         puts "Error: #{e.inspect}"
         puts e.backtrace
       end
@@ -31,6 +44,24 @@ class SchemeRepl
   end
 
   private
+
+  def reset_prompt
+    @prompt = 'repl> '
+    @lines = []
+  end
+
+  def count_parens(str)
+    # FIXME: Stupid thing won't work for strings.
+    lparens = str.each_char.reduce(0) do |acc, c|
+      acc + (c == '(' ? 1 : 0)
+    end
+
+    rparens = str.each_char.reduce(0) do |acc, c|
+      acc + (c == ')' ? 1 : 0)
+    end
+
+    [lparens, rparens]
+  end
 
   def eval(str)
     parse(str).eval(@env)
