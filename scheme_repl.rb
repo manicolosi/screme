@@ -2,6 +2,7 @@ require 'treetop'
 require 'readline'
 require 'pp'
 
+require 'environment'
 require 'function'
 require 'syntax'
 
@@ -46,18 +47,23 @@ class SchemeRepl
   end
 end
 
-env = { '+' => Function.new {|a, b| a + b},
-        '*' => Function.new {|a, b| a * b},
-        '=' => Function.new {|a, b| a == b},
-        'define' => Syntax.new do |env, identifier, expression|
-          env[identifier.elements[1].text_value] = expression.eval(env)
-        end,
-        'lambda' => Syntax.new do |env, params, body|
-          Function.lambda(env, params, body)
-        end,
-        # For debugging
-        'pp' => Function.new {|arg| pp arg},
-        'env' => Syntax.new {|env| env}
-      }
+env = Environment.new
+
+env.define_syntax(:define) do |env, identifier, expression|
+  identifier = identifier.elements[1].identifier
+  env.define identifier, expression.eval(env)
+end
+
+env.define_syntax(:lambda) do |env, formals, body|
+  Function.lambda(env, formals, body)
+end
+
+env.define(:+) {|a, b| a + b}
+env.define(:*) {|a, b| a * b}
+
+# For debugging. env needs to be a syntax, so it can get at the
+# environment.
+env.define_syntax(:env) {|env| env}
+env.define(:pp) {|arg| pp arg}
 
 SchemeRepl.new(env).run

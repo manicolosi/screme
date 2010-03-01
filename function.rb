@@ -10,14 +10,18 @@ class Function < Proc
     end
   end
 
-  def self.lambda(env, params, body)
-    params = params.elements[1].elements[1].elements.map do |param|
-      param.elements[1].text_value
+  def self.lambda(env, formals, body)
+    formals = formals.elements[1].elements[1].elements.map do |formal|
+      formal.elements[1].identifier
     end
 
     Function.new do |*args|
-      env2 = env.merge({ params[0] => args[0], params[1] => args[1] })
-      body.eval(env2)
+      new_env = Environment.new env
+      formals.each_with_index do |formal, i|
+        new_env.define formal, args[i]
+      end
+
+      body.eval(new_env)
     end
   end
 

@@ -29,7 +29,7 @@ class EnvironmentTestCase < Test::Unit::TestCase
     assert_equal 7, @env[:+].apply(@env, a, b)
   end
 
-  def test_environment_lookup
+  def test_parent_bound?_checking
     parent = @env
     child = Environment.new parent
 
@@ -39,6 +39,18 @@ class EnvironmentTestCase < Test::Unit::TestCase
 
     assert child.bound?(:y)
     assert child.bound?(:x)
+  end
+
+  def test_parent_lookup
+    parent = @env
+    child = Environment.new parent
+
+    parent.define :x, 3
+    parent.define :y, 5
+    child.define :y, 7 # Shadow parent's :y
+
+    assert_equal 7, child[:y]
+    assert_equal 3, child[:x]
   end
 
   def test_syntax

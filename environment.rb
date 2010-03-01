@@ -11,10 +11,12 @@ class Environment
     @bindings = {}
   end
 
-  def_delegator :@bindings, :[]
-
   def bound?(symbol)
     @bindings.member?(symbol) || (@parent && @parent.bound?(symbol))
+  end
+
+  def [](symbol)
+    @bindings[symbol] || (@parent && @parent[symbol])
   end
 
   def define(symbol, value = nil, &block)
