@@ -40,4 +40,10 @@ class EnvironmentTestCase < Test::Unit::TestCase
     assert child.bound?(:y)
     assert child.bound?(:x)
   end
+
+  def test_syntax
+    @env.define_syntax(:test) {}
+
+    assert @env[:test].is_a? Syntax
+  end
 end

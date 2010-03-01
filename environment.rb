@@ -1,6 +1,7 @@
 require 'forwardable'
 
 require 'function'
+require 'syntax'
 
 class Environment
   extend Forwardable
@@ -12,6 +13,10 @@ class Environment
 
   def_delegator :@bindings, :[]
 
+  def bound?(symbol)
+    @bindings.member?(symbol) || (@parent && @parent.bound?(symbol))
+  end
+
   def define(symbol, value = nil, &block)
     if block_given?
       @bindings[symbol] = Function.new(&block)
@@ -20,7 +25,7 @@ class Environment
     end
   end
 
-  def bound?(symbol)
-    @bindings.member?(symbol) || (@parent && @parent.bound?(symbol))
+  def define_syntax(symbol, &block)
+    @bindings[symbol] = Syntax.new(&block)
   end
 end
