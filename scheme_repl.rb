@@ -1,5 +1,6 @@
 require 'treetop'
 require 'readline'
+require 'pp'
 
 require 'function'
 require 'syntax'
@@ -48,13 +49,15 @@ end
 env = { '+' => Function.new {|a, b| a + b},
         '*' => Function.new {|a, b| a * b},
         '=' => Function.new {|a, b| a == b},
-        'print-env' => Syntax.new {|env| puts env.inspect},
         'define' => Syntax.new do |env, identifier, expression|
           env[identifier.elements[1].text_value] = expression.eval(env)
         end,
         'lambda' => Syntax.new do |env, params, body|
           Function.lambda(env, params, body)
-        end
+        end,
+        # For debugging
+        'pp' => Function.new {|arg| pp arg},
+        'env' => Syntax.new {|env| env}
       }
 
 SchemeRepl.new(env).run
