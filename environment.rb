@@ -5,7 +5,8 @@ require 'function'
 class Environment
   extend Forwardable
 
-  def initialize
+  def initialize(parent = nil)
+    @parent = parent
     @bindings = {}
   end
 
@@ -20,6 +21,6 @@ class Environment
   end
 
   def bound?(symbol)
-    @bindings.member? symbol
+    @bindings.member?(symbol) || (@parent && @parent.bound?(symbol))
   end
 end
