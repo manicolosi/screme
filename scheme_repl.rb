@@ -14,7 +14,7 @@ class SchemeRepl
     @parser = SchemeParser.new
 
     Readline.completion_proc = proc do |s|
-      @env.keys.grep /^#{Regexp.escape(s)}/
+      @env.bindings.map(&:to_s).grep /^#{Regexp.escape(s)}/
     end
   end
 

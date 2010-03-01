@@ -15,6 +15,10 @@ class Environment
     @bindings.member?(symbol) || (@parent && @parent.bound?(symbol))
   end
 
+  def bindings
+    @bindings.keys + (@parent.nil? ? [] : @parent.bindings)
+  end
+
   def [](symbol)
     @bindings[symbol] || (@parent && @parent[symbol])
   end

@@ -58,4 +58,20 @@ class EnvironmentTestCase < Test::Unit::TestCase
 
     assert @env[:test].is_a? Syntax
   end
+
+  def test_bindings
+    parent = @env
+    child = Environment.new parent
+
+    parent.define :x, 3
+    parent.define :y, 5
+    child.define :z, 7
+
+    bindings = child.bindings
+
+    assert_equal 3, bindings.length
+    assert bindings.include?(:x)
+    assert bindings.include?(:y)
+    assert bindings.include?(:z)
+  end
 end
