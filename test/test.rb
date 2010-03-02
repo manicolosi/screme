@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'treetop'
 
-Treetop.load 'grammar.tt'
+Treetop.load File.dirname(__FILE__) + '/../lib/grammar.tt'
 
 class TestCase < Test::Unit::TestCase
   def setup

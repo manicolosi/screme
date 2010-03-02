@@ -1,10 +1,12 @@
 require 'treetop'
 require 'readline'
 
+$: << File.dirname(__FILE__)
+
 require 'function'
 require 'syntax'
 
-Treetop.load 'grammar.tt'
+Treetop.load File.dirname(__FILE__) + '/grammar.tt'
 
 class SchemeRepl
   def initialize(env)
