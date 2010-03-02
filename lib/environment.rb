@@ -1,5 +1,7 @@
 require 'forwardable'
 
+$: << File.dirname(__FILE__)
+
 require 'function'
 require 'syntax'
 

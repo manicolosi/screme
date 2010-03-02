@@ -1,7 +1,8 @@
 require 'test/unit'
 require 'mocha'
 
-require 'environment'
+lib_path = File.dirname(__FILE__) + '/../lib/'
+require lib_path + 'environment'
 
 class EnvironmentTestCase < Test::Unit::TestCase
   def setup
