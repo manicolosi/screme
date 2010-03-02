@@ -1,7 +1,10 @@
 require 'test/unit'
 require 'treetop'
 
-Treetop.load File.dirname(__FILE__) + '/../lib/grammar.tt'
+lib_path = File.dirname(__FILE__) + '/../lib/'
+
+require lib_path + 'function'
+Treetop.load lib_path + 'grammar.tt'
 
 class TestCase < Test::Unit::TestCase
   def setup
@@ -51,7 +54,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def test_lists_are_evaluated
-    @env = { '+' => proc {|a, b| a + b}, 'b' => 1, 'c' => 2 }
+    @env = { '+' => Function.new {|a, b| a + b}, 'b' => 1, 'c' => 2 }
     assert_equal 3, parse("(+ b c)").eval(@env)
   end
 end
