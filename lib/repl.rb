@@ -1,8 +1,10 @@
 require 'treetop'
 require 'readline'
+require 'pp'
 
 $: << File.dirname(__FILE__)
 
+require 'environment'
 require 'function'
 require 'syntax'
 
@@ -14,7 +16,7 @@ class SchemeRepl
     @parser = SchemeParser.new
 
     Readline.completion_proc = proc do |s|
-      @env.keys.grep /^#{Regexp.escape(s)}/
+      @env.bindings.map(&:to_s).grep /^#{Regexp.escape(s)}/
     end
   end
 
@@ -47,16 +49,23 @@ class SchemeRepl
   end
 end
 
-env = { '+' => Function.new {|a, b| a + b},
-        '*' => Function.new {|a, b| a * b},
-        '=' => Function.new {|a, b| a == b},
-        'print-env' => Syntax.new {|env| puts env.inspect},
-        'define' => Syntax.new do |env, identifier, expression|
-          env[identifier.elements[1].text_value] = expression.eval(env)
-        end,
-        'lambda' => Syntax.new do |env, params, body|
-          Function.lambda(env, params, body)
-        end
-      }
+env = Environment.new
+
+env.define_syntax(:define) do |env, identifier, expression|
+  identifier = identifier.elements[1].identifier
+  env.define identifier, expression.eval(env)
+end
+
+env.define_syntax(:lambda) do |env, formals, body|
+  Function.lambda(env, formals, body)
+end
+
+env.define(:+) {|a, b| a + b}
+env.define(:*) {|a, b| a * b}
+
+# For debugging. env needs to be a syntax, so it can get at the
+# environment.
+env.define_syntax(:env) {|env| env}
+env.define(:pp) {|arg| pp arg}
 
 SchemeRepl.new(env).run
