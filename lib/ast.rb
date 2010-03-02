@@ -6,7 +6,13 @@ end
 
 module SymbolEvaluation
   def evaluate(env = {})
-    if env.key? self
+    bound_pred = if env.respond_to? :bound?
+      :bound?
+    else
+      :key?
+    end
+
+    if env.send bound_pred, self
       env[self]
     else
       raise "Unbound symbol \"#{ self }\"."

@@ -4,16 +4,16 @@ require 'pp'
 
 $: << File.dirname(__FILE__)
 
+require 'ast'
 require 'environment'
 require 'function'
+require 'parser'
 require 'syntax'
 
-Treetop.load File.dirname(__FILE__) + '/grammar.tt'
-
-class SchemeRepl
+class Repl
   def initialize(env)
     @env = env
-    @parser = SchemeParser.new
+    @parser = Parser.new
 
     Readline.completion_proc = proc do |s|
       @env.bindings.map(&:to_s).grep /^#{Regexp.escape(s)}/
@@ -24,7 +24,7 @@ class SchemeRepl
     while line = Readline.readline('repl> ', true)
       begin
         line = line.strip
-        display_result(eval(line)) unless line.empty?
+        display_result(evaluate(parse(line))) unless line.empty?
       rescue Exception => e
         puts "Error: #{e.inspect}"
         puts e.backtrace
@@ -36,12 +36,12 @@ class SchemeRepl
 
   private
 
-  def eval(str)
-    parse(str).eval(@env)
+  def evaluate(ast)
+    ast.evaluate(@env)
   end
 
-  def parse(str)
-    @parser.parse(str)
+  def parse(input)
+    @parser.parse(input)
   end
 
   def display_result(result)
@@ -68,4 +68,4 @@ env.define(:*) {|a, b| a * b}
 env.define_syntax(:env) {|env| env}
 env.define(:pp) {|arg| pp arg}
 
-SchemeRepl.new(env).run
+Repl.new(env).run
