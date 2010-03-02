@@ -1,0 +1,24 @@
+* Based on top of Scheme (r5rs/r6rs)
+* Borrows features from CL and Clojure
+* Favor functional paradigm (i.e. immutability)
+* Code should be easy to read and easy to write
+* Mostly written in Screme itself
+  - Built on top of a few primitive procedures and forms
+  - Core library, REPL, etc. are implement in Screme
+
+* Ruby interop
+  - Jscheme: http://jscheme.sourceforge.net/jscheme/doc/javadot.html
+  - Clojure: http://clojure.org/java_interop
+* String interpolation (somehow)
+* Regexp syntax: (define x /^regex$/)
+* Range type/syntax: (define my-range 1..100)
+* Hashes/Association Lists: {'a 1 'b 2 'c 3} or just lists (('a 1) ('b 2) ..
+  - Differences?
+* Allow lazy evaluation (not always)
+* Nice exception system
+* Easy pattern matching
+* Destructuring bind
+* OOP
+  - operator overloading
+
+

@@ -1,0 +1,9 @@
+* Lambda
+  - Check argument size
+  - Allow multiple expressions in body:
+    (define test (lambda (x y z)
+      (x) (y) (z)))
+    => expression3
+* Error handling
+  - Only show 10 lines of backtraces (show first 7, then "...," then the
+    last 3) or detect repetition
