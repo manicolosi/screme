@@ -11,22 +11,18 @@ class Function < Proc
   end
 
   def self.lambda(env, formals, body)
-    formals = formals.elements[1].elements[1].elements.map do |formal|
-      formal.elements[1].identifier
-    end
-
     Function.new do |*args|
       new_env = Environment.new env
       formals.each_with_index do |formal, i|
         new_env.define formal, args[i]
       end
 
-      body.eval(new_env)
+      body.evaluate(new_env)
     end
   end
 
-  def apply(env, *args)
-    call *args.map {|a| a.eval(env)}
+  def call(env, *args)
+    super *args.map {|a| a.evaluate(env)}
   end
 end
 

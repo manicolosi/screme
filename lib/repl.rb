@@ -52,8 +52,7 @@ end
 env = Environment.new
 
 env.define_syntax(:define) do |env, identifier, expression|
-  identifier = identifier.elements[1].identifier
-  env.define identifier, expression.eval(env)
+  env.define identifier, expression.evaluate(env)
 end
 
 env.define_syntax(:lambda) do |env, formals, body|

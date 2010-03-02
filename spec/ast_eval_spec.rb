@@ -28,13 +28,13 @@ describe "AST" do
   end
 
   it "should apply the function inside of a list" do
-    env = {:+ => lambda {|a, b| a + b} }
+    env = {:+ => lambda {|env, a, b| a + b} }
     ast = [:+, 2, 3]
     ast.evaluate(env).should == 5
   end
 
   it "should evaluate arguments before applying a function" do
-    env = {:+ => lambda {|a, b| a + b} }
+    env = {:+ => lambda {|env, a, b| a.evaluate(env) + b.evaluate(env)} }
     ast = [:+, [:+, 2, 4], [:+, 1, 3]]
     ast.evaluate(env).should == 10
   end

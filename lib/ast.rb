@@ -23,9 +23,9 @@ end
 module FunctionApplicationEvaluation
   def evaluate(env = {})
     fn = first.evaluate(env)
-    args = self[1..-1].map {|arg| arg.evaluate(env)}
+    args = self[1..-1]
 
-    fn.call *args
+    fn.call env, *args
   end
 end
 
