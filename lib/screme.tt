@@ -1,0 +1,41 @@
+grammar Screme
+  rule expression
+    space expr:(atom / list) space <ExpressionNode>
+  end
+
+  rule atom
+    integer / string / symbol
+  end
+
+  rule list
+    '(' exprs:expression* ')' <ListNode>
+  end
+
+  rule integer
+    ('0' / [1-9] [0-9]*) <IntegerNode>
+  end
+
+  rule string
+    '"' inner:('\\"' / [^"])* '"' <StringNode>
+  end
+
+  rule symbol
+    (!delim .)+ <SymbolNode>
+  end
+
+  rule delim
+    ws / paren
+  end
+
+  rule paren
+    [\(\)]
+  end
+
+  rule space
+    ws*
+  end
+
+  rule ws
+    [ \t\n]
+  end
+end
