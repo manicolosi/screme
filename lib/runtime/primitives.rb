@@ -29,6 +29,11 @@ class Primitives < ScremeForms
     expr
   end
 
+  define_special(:if) do |env, condition, then_expr, else_expr|
+    expr = condition.evaluate(env) ? then_expr : else_expr
+    expr.evaluate(env)
+  end
+
   define(:+) { |a, b| a + b }
   define(:*) { |a, b| a * b }
 end

@@ -31,6 +31,17 @@ describe Parser do
     parse(input).should == [123, 456, 789]
   end
 
+  it "should parse #t and #f booleans to the Ruby boolean types" do
+    input = '#t'
+    parse(input).should == true
+
+    input = '#f'
+    parse(input).should == false
+
+    input = '(#t #f #t)'
+    parse(input).should == [true, false, true]
+  end
+
   it "should parse a list of integers, strings, and symbols" do
     input = '(1 "two" three)'
     parse(input).should == [1, "two", :three]

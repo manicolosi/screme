@@ -31,5 +31,7 @@ end
 
 Fixnum.send :include, SelfEvaluation
 String.send :include, SelfEvaluation
+TrueClass.send :include, SelfEvaluation
+FalseClass.send :include, SelfEvaluation
 Symbol.send :include, SymbolEvaluation
 Array.send  :include, FunctionApplicationEvaluation

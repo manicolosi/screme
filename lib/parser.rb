@@ -18,6 +18,16 @@ module ListNode
   end
 end
 
+module BooleanNode
+  def to_ast
+    if text_value == '#t'
+      true
+    elsif text_value == '#f'
+      false
+    end
+  end
+end
+
 module IntegerNode
   def to_ast
     text_value.to_i
