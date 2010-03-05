@@ -38,8 +38,6 @@ describe Parser do
   end
 
   it "should be able to parse the quote character before lists" do
-    pending
-
     input = "'(a 1 b 2 c 3)"
     parse(input).should == [:quote, [:a, 1, :b, 2, :c, 3]]
   end

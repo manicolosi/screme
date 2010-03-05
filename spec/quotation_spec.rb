@@ -16,8 +16,6 @@ describe "Quotation" do
   end
 
   it "should be able to use the apostrophe as a shortcut to quote" do
-    pending
-
     interpreter = ScremeInterpreter.new
     input = "'(a 1 b 2 c 3)"
 

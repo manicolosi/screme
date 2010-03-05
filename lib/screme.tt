@@ -1,6 +1,7 @@
 grammar Screme
   rule expression
     space
+    quote:quote?
     expr:(atom / list)
     space <ExpressionNode>
   end
@@ -10,7 +11,7 @@ grammar Screme
   end
 
   rule atom
-    quote:quote? atom:(integer / string / symbol) <AtomNode>
+    integer / string / symbol
   end
 
   rule list
