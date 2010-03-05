@@ -2,8 +2,15 @@ require 'treetop'
 
 module ExpressionNode
   def to_ast
-    expr.to_ast
+    if quote.is_a? QuoteNode
+      [:quote, expr.to_ast]
+    else
+      expr.to_ast
+    end
   end
+end
+
+module QuoteNode
 end
 
 module ListNode

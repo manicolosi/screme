@@ -24,6 +24,10 @@ class ScremeInterpreter
       Function.lambda(env, formals, body)
     end
 
+    define_syntax(:quote) do |env, expression|
+      expression
+    end
+
     define(:+) {|a, b| a + b}
     define(:*) {|a, b| a * b}
 
