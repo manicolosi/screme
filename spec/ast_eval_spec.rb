@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/ast.rb'
+require File.dirname(__FILE__) + '/../lib/screme.rb'
 
 describe "AST" do
   it "should be able to evaluate integers" do

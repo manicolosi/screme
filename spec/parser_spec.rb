@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/parser.rb'
+require File.dirname(__FILE__) + '/../lib/screme.rb'
 
 describe Parser do
   it "should parse integer atom expressions as Ruby integers" do

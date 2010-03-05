@@ -1,13 +1,4 @@
-require 'forwardable'
-
-$: << File.dirname(__FILE__)
-
-require 'function'
-require 'syntax'
-
 class Environment
-  extend Forwardable
-
   def initialize(parent = nil)
     @parent = parent
     @bindings = {}
