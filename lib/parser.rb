@@ -6,6 +6,19 @@ module ExpressionNode
   end
 end
 
+module QuoteNode
+end
+
+module AtomNode
+  def to_ast
+    if quote.is_a? QuoteNode
+      [:quote, atom.to_ast]
+    else
+      atom.to_ast
+    end
+  end
+end
+
 module ListNode
   def to_ast
     exprs.elements.map { |e| e.to_ast }

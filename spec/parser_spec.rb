@@ -26,6 +26,24 @@ describe Parser do
     parse(input).should == [1, "two", :three]
   end
 
+  it "should be able to parse the quote character before atoms" do
+    input = "'1"
+    parse(input).should == [:quote, 1]
+
+    input = "'abc"
+    parse(input).should == [:quote, :abc]
+
+    input = '\'"abc"'
+    parse(input).should == [:quote, "abc"]
+  end
+
+  it "should be able to parse the quote character before lists" do
+    pending
+
+    input = "'(a 1 b 2 c 3)"
+    parse(input).should == [:quote, [:a, 1, :b, 2, :c, 3]]
+  end
+
   def parse(input)
     Parser.new.parse(input)
   end

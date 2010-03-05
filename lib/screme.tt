@@ -1,10 +1,16 @@
 grammar Screme
   rule expression
-    space expr:(atom / list) space <ExpressionNode>
+    space
+    expr:(atom / list)
+    space <ExpressionNode>
+  end
+
+  rule quote
+    "'" <QuoteNode>
   end
 
   rule atom
-    integer / string / symbol
+    quote:quote? atom:(integer / string / symbol) <AtomNode>
   end
 
   rule list
