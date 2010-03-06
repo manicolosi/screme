@@ -11,6 +11,16 @@ describe Parser do
     parse(input).should == "Hello world"
   end
 
+  it "should be able to parse strings containing escaped quotes" do
+    input = '"Hello \"World\""'
+    parse(input).should == 'Hello "World"'
+  end
+
+  it "should be able to parse strings containing escaped backslashes" do
+    input = '"Hello \\\\ World"'
+    parse(input).should == 'Hello \\ World'
+  end
+
   it "should parse symbol atom expressions as Ruby symbols" do
     input = 'abc'
     parse(input).should == :abc

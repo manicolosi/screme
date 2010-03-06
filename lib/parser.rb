@@ -26,7 +26,7 @@ end
 
 module StringNode
   def to_ast
-    inner.text_value
+    inner.text_value.gsub('\"', '"').gsub('\\\\', '\\')
   end
 end
 
