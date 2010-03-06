@@ -1,13 +1,12 @@
 grammar Screme
   rule expression
     space
-    quote:quote?
-    expr:(atom / list)
+    expr:(quoted / atom / list)
     space <ExpressionNode>
   end
 
-  rule quote
-    "'" <QuoteNode>
+  rule quoted
+    "'" expression <QuotedNode>
   end
 
   rule atom
