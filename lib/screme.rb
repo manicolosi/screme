@@ -16,15 +16,15 @@ class ScremeInterpreter
     @parser = Parser.new
 
     # This all should be kept in a different file
-    define_syntax(:define) do |env, identifier, expression|
+    define_special(:define) do |env, identifier, expression|
       env.define identifier, expression.evaluate(env)
     end
 
-    define_syntax(:lambda) do |env, formals, body|
+    define_special(:lambda) do |env, formals, body|
       Function.lambda(env, formals, body)
     end
 
-    define_syntax(:quote) do |env, expression|
+    define_special(:quote) do |env, expression|
       expression
     end
 
@@ -33,7 +33,7 @@ class ScremeInterpreter
 
     # For debugging. env needs to be a syntax, so it can get at the
     # environment.
-    define_syntax(:env) {|env| env}
+    define_special(:env) {|env| env}
     define(:pp) {|arg| pp arg}
   end
 
@@ -43,5 +43,5 @@ class ScremeInterpreter
 
   private
 
-  def_delegators :@env, :define, :define_syntax
+  def_delegators :@env, :define, :define_special
 end

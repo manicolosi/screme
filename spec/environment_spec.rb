@@ -37,10 +37,10 @@ describe Environment do
     child[:y].should == 7
   end
 
-  it "can have a syntax defined" do
+  it "can have a special form defined" do
     env = Environment.new
 
-    env.define_syntax(:test) do |env2, expr1, expr2|
+    env.define_special(:test) do |env2, expr1, expr2|
       env.should == env2
       expr1.should == [:peanut, :butter]
       expr2.should == :jelly

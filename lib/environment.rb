@@ -24,7 +24,7 @@ class Environment
     end
   end
 
-  def define_syntax(symbol, &block)
+  def define_special(symbol, &block)
     @bindings[symbol] = Syntax.new(&block)
   end
 end
