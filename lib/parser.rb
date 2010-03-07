@@ -30,7 +30,7 @@ module StringNode
   end
 end
 
-module SymbolNode
+module IdentifierNode
   def to_ast
     text_value.to_sym
   end

@@ -1,7 +1,7 @@
 grammar Screme
   rule expression
     space
-    expr:(quoted / atom / list)
+    expr:(quoted / list / atom)
     space <ExpressionNode>
   end
 
@@ -9,12 +9,12 @@ grammar Screme
     "'" expression <QuotedNode>
   end
 
-  rule atom
-    integer / string / symbol
-  end
-
   rule list
     '(' exprs:expression* ')' <ListNode>
+  end
+
+  rule atom
+    integer / string / identifier
   end
 
   rule integer
@@ -25,8 +25,8 @@ grammar Screme
     '"' inner:('\\"' / [^"])* '"' <StringNode>
   end
 
-  rule symbol
-    (!delim .)+ <SymbolNode>
+  rule identifier
+    (!delim .)+ <IdentifierNode>
   end
 
   rule delim
