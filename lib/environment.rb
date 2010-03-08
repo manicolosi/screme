@@ -9,7 +9,15 @@ class Environment
   end
 
   def bindings
-    @bindings.keys + (@parent.nil? ? [] : @parent.bindings)
+    @bindings.merge(@parent.nil? ? {} : @parent.bindings)
+  end
+
+  def merge(another)
+    @bindings.merge! another.bindings
+  end
+
+  def load(obj)
+    merge obj.env
   end
 
   def [](symbol)

@@ -50,7 +50,7 @@ describe Environment do
     env[:test].call(env, [:peanut, :butter], :jelly).should == :retval
   end
 
-  it "has an Array of all bindings" do
+  it "has a Hash of all bindings" do
     parent = Environment.new
     child  = Environment.new(parent)
 
@@ -61,8 +61,51 @@ describe Environment do
     bindings = child.bindings
 
     bindings.length.should == 3
+
     bindings.should include(:x)
     bindings.should include(:y)
     bindings.should include(:z)
+
+    bindings[:x].should == 3
+    bindings[:y].should == 5
+    bindings[:z].should == 7
+  end
+
+  it "can't be modified through #bindings" do
+    env = Environment.new
+    env.define :x, 1
+
+    bindings = env.bindings
+
+    bindings[:x] = 2
+
+    env[:x].should == 1
+    bindings[:x].should == 2
+  end
+
+  it "can have another environment merged in" do
+    env1 = Environment.new
+    env2 = Environment.new
+
+    env1.define :x, 1
+    env2.define :y, 1
+
+    env1.should_not be_bound(:y)
+
+    env1.merge env2
+
+    env1.should be_bound(:y)
+  end
+
+  it "can have a class of definitions loaded into it" do
+    o_env = Environment.new
+    o_env.define(:x, 5)
+    o = Object.new
+    o.stub!(:env).and_return(o_env)
+
+    env = Environment.new
+    env.load o
+
+    env[:x].should == 5
   end
 end
