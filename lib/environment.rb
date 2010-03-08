@@ -16,6 +16,10 @@ class Environment
     @bindings.merge! another.bindings
   end
 
+  def load(obj)
+    merge obj.env
+  end
+
   def [](symbol)
     @bindings[symbol] || (@parent && @parent[symbol])
   end
