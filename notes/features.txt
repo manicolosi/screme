@@ -20,5 +20,12 @@
 * Destructuring bind
 * OOP
   - operator overloading
-
-
+* Composition operator:
+  - Clojure uses -> for this operation
+  - Haskell uses . for this operation
+  - Example:
+    (define numbers '(('one . 1) ('two . 2) ('three . 3)))
+    (define (key pair) (car pair))
+    (-> key car numbers)
+    ;=> (key (car numbers))
+    ;=> 'one
