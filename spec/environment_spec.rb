@@ -97,7 +97,15 @@ describe Environment do
     env1.should be_bound(:y)
   end
 
-  it "can have a module of functions loaded into it" do
-    pending
+  it "can have a class of definitions loaded into it" do
+    o_env = Environment.new
+    o_env.define(:x, 5)
+    o = Object.new
+    o.stub!(:env).and_return(o_env)
+
+    env = Environment.new
+    env.load o
+
+    env[:x].should == 5
   end
 end
