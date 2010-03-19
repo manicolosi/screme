@@ -29,6 +29,10 @@ class Primitives < ScremeForms
     expr
   end
 
+  define_special(:quasiquote) do |env, expr|
+    expr
+  end
+
   define(:+) { |a, b| a + b }
   define(:*) { |a, b| a * b }
 end

@@ -6,7 +6,7 @@ grammar Screme
   end
 
   rule quoted
-    "'" expression <QuotedNode>
+    quote:("`" / "'") expression <QuotedNode>
   end
 
   rule list

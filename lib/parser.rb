@@ -8,7 +8,14 @@ end
 
 module QuotedNode
   def to_ast
-    [:quote, expression.to_ast]
+    [quote_type, expression.to_ast]
+  end
+
+  def quote_type
+    case quote.text_value
+    when "'": :quote
+    when "`": :quasiquote
+    end
   end
 end
 
