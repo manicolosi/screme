@@ -44,8 +44,6 @@ describe "Quasiquotation" do
   end
 
   it "should allow unquoting single atoms in a list" do
-    pending
-
     interpreter = ScremeInterpreter.new
     interpreter.env.define(:b, 2)
 
