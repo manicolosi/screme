@@ -59,6 +59,11 @@ describe "Quasiquotation" do
     evaluate(input).should == [5, 10, 15]
   end
 
+  it "should allow unquoting when the unquote is deeply nested do" do
+    input = "`(5 (7 ,(* 2 5) 13) 15)"
+    evaluate(input).should == [5, [7, 10, 13], 15]
+  end
+
   def evaluate(input, interpreter = ScremeInterpreter.new)
     interpreter.parse_and_eval(input)
   end
