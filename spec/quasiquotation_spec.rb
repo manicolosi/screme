@@ -51,6 +51,14 @@ describe "Quasiquotation" do
     evaluate(input, interpreter).should == [:a, 2, :c]
   end
 
+  it "should allow unquoting function application" do
+    input = "(quasiquote (5 (unquote (* 2 5)) 15))"
+    evaluate(input).should == [5, 10, 15]
+
+    input = "`(5 ,(* 2 5) 15)"
+    evaluate(input).should == [5, 10, 15]
+  end
+
   def evaluate(input, interpreter = ScremeInterpreter.new)
     interpreter.parse_and_eval(input)
   end
