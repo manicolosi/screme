@@ -15,6 +15,7 @@ module QuotedNode
     case quote.text_value
     when "'": :quote
     when "`": :quasiquote
+    when ",": :unquote
     end
   end
 end

@@ -27,7 +27,33 @@ describe "Quasiquotation" do
     evaluate(input).should == [:quasiquote, [:a, :b, :c]]
   end
 
-  def evaluate(input)
-    ScremeInterpreter.new.parse_and_eval(input)
+  it "should allow unquoting single atoms" do
+    interpreter = ScremeInterpreter.new
+    interpreter.env.define(:a, 5)
+
+    input = "(quasiquote (unquote a))"
+    evaluate(input, interpreter).should == 5
+  end
+
+  it "should allow unquoting single atoms (backquote and comma)" do
+    interpreter = ScremeInterpreter.new
+    interpreter.env.define(:a, 5)
+
+    input = "`,a"
+    evaluate(input, interpreter).should == 5
+  end
+
+  it "should allow unquoting single atoms in a list" do
+    pending
+
+    interpreter = ScremeInterpreter.new
+    interpreter.env.define(:b, 2)
+
+    input = "(quasiquote (a (unquote b) c))"
+    evaluate(input, interpreter).should == [:a, 2, :c]
+  end
+
+  def evaluate(input, interpreter = ScremeInterpreter.new)
+    interpreter.parse_and_eval(input)
   end
 end

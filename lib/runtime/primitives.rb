@@ -30,7 +30,11 @@ class Primitives < ScremeForms
   end
 
   define_special(:quasiquote) do |env, expr|
-    expr
+    if expr.is_a? Array and expr.first == :unquote
+      expr[1].evaluate(env)
+    else
+      expr
+    end
   end
 
   define(:+) { |a, b| a + b }
