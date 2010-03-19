@@ -39,6 +39,8 @@ class Primitives < ScremeForms
     end
   end
 
+  define(:atom?) { |expr| expr.atom? }
+
   define(:+) { |a, b| a + b }
   define(:*) { |a, b| a * b }
 end
