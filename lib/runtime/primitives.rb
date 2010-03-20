@@ -39,12 +39,11 @@ class Primitives < ScremeForms
     end
   end
 
-  #(let ((a 2)) a)
-  #((lambda (a) a) 2)
-
   define_special(:let) do |env, bindings, body|
-    #raise bindings.inspect + "\n" + body.inspect
-    [[:lambda, bindings.first, body], bindings.first[1]].evaluate(env)
+    variables = bindings.map(&:first)
+    inits     = bindings.map(&:last)
+
+    [[:lambda, variables, body], *inits].evaluate(env)
   end
 
   define(:atom?) { |expr| expr.atom? }
