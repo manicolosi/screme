@@ -60,4 +60,8 @@ class Primitives < ScremeForms
   define(:-) do |a, *z|
     z.empty? ? -a : [a, *z].reduce(&:-)
   end
+
+  define(:/) do |a, *z|
+    z.empty? ? Rational(1, a) : [a, *z].reduce(&:quo)
+  end
 end

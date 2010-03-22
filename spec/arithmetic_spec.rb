@@ -61,7 +61,18 @@ describe "Arithmetic" do
   end
 
   describe "(division: /)" do
-    specify "return rational numbers"
+    specify "with one operand returns the multiplicative inverse" do
+      input = '(/ 3)'
+      evaluate(input).should == Rational(1, 3)
+    end
+
+    specify "works with any number of operands" do
+      input = '(/ 3 4)'
+      evaluate(input).should == Rational(3, 4)
+
+      input = '(/ 3 4 5)'
+      evaluate(input).should == Rational(3, 20)
+    end
   end
 
   def evaluate(input)
