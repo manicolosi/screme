@@ -18,7 +18,6 @@ class Repl
         display_result(@interpreter.parse_and_eval(line)) unless line.empty?
       rescue Exception => e
         puts "Error: #{e.inspect}"
-        puts e.backtrace
       end
     end
 
