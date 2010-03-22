@@ -33,6 +33,11 @@ describe "AST" do
     ast.evaluate(env).should == 5
   end
 
+  it "should raise an error if the list's car isn't a function" do
+    ast = ["+", 2, 3]
+    lambda { ast.evaluate }.should raise_error(RuntimeError, 'Can\'t apply: "+"')
+  end
+
   it "should evaluate arguments before applying a function" do
     env = {:+ => lambda {|env, a, b| a.evaluate(env) + b.evaluate(env)} }
     ast = [:+, [:+, 2, 4], [:+, 1, 3]]

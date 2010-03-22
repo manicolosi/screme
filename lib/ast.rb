@@ -26,6 +26,8 @@ module FunctionApplicationEvaluation
     args = self[1..-1]
 
     fn.call env, *args
+  rescue NoMethodError
+    raise "Can't apply: #{fn.representation}"
   end
 end
 
