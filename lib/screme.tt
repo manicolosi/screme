@@ -14,7 +14,11 @@ grammar Screme
   end
 
   rule atom
-    integer / string / identifier
+    boolean / integer / string / identifier
+  end
+
+  rule boolean
+    ('#t' / '#f') <BooleanNode>
   end
 
   rule integer
