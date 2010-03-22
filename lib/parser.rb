@@ -16,6 +16,7 @@ module QuotedNode
     when "'": :quote
     when "`": :quasiquote
     when ",": :unquote
+    when ",@": :"unquote-splicing"
     end
   end
 end
