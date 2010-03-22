@@ -22,10 +22,19 @@ end
 
 module FunctionApplicationEvaluation
   def evaluate(env = {})
-    fn = first.evaluate(env)
+    fn_sym = first
+    fn_str = fn_sym.to_s
     args = self[1..-1]
 
-    fn.call env, *args
+    if fn_str.match /^#/
+      # Ruby Interop
+      method = fn_str.slice(1..-1).to_sym
+      args.map! {|a| a.evaluate(env)}
+      args[0].send method, *args[1..-1]
+    else
+      fn = fn_sym.evaluate(env)
+      fn.call env, *args
+    end
   end
 end
 
