@@ -54,6 +54,10 @@ class Primitives < ScremeForms
     expr.evaluate(env)
   end
 
-  define(:+) { |a, b| a + b }
-  define(:*) { |a, b| a * b }
+  define(:+) { |*z| z.reduce(&:+) || 0 }
+  define(:*) { |*z| z.reduce(&:*) || 1 }
+
+  define(:-) do |a, *z|
+    z.empty? ? -a : [a, *z].reduce(&:-)
+  end
 end
