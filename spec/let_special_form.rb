@@ -7,8 +7,22 @@ describe "Special Form: Let" do
   end
 
   it "works with multiple bindings" do
-    input = '(let ((a 5) (b 10) (c 2)) (+ (* a c) b))'
-    evaluate(input).should == 20
+    input = %{
+      (let ((x 2) (y 3))
+        (* x y))
+    }
+    evaluate(input).should == 6
+  end
+
+  it "evaluates the bindings in the parent environment" do
+    input = %{
+      (let ((x 2) (y 3))
+        (let ((x 7)
+              (z (+ x y)))
+          (* z x)))
+    }
+
+    evaluate(input).should == 35
   end
 
   def evaluate(input)
