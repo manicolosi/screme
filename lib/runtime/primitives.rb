@@ -30,13 +30,7 @@ class Primitives < ScremeForms
   end
 
   define_special(:quasiquote) do |env, expr|
-    if expr.atom?
-      expr
-    elsif expr.first == :unquote
-      expr[1].evaluate(env)
-    else
-      expr.map {|e| [:quasiquote, e].evaluate(env)}
-    end
+    expr.quasiquote(env)
   end
 
   define_special(:let) do |env, bindings, body|
