@@ -39,6 +39,13 @@ class Primitives < ScremeForms
     end
   end
 
+  define_special(:let) do |env, bindings, body|
+    variables = bindings.map(&:first)
+    inits     = bindings.map(&:last)
+
+    [[:lambda, variables, body], *inits].evaluate(env)
+  end
+
   define(:atom?) { |expr| expr.atom? }
 
   define(:+) { |a, b| a + b }
