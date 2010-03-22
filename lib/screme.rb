@@ -3,7 +3,7 @@ $: << File.dirname(__FILE__)
 require 'forwardable'
 
 %w[ ast environment extensions function parser syntax
-    runtime/primitives ].each do |file|
+    representations runtime/primitives ].each do |file|
   require file
 end
 

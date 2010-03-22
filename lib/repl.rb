@@ -28,7 +28,7 @@ class Repl
   private
 
   def display_result(result)
-    puts "=> #{result.inspect}"
+    puts "=> #{result.representation}"
   end
 end
 
