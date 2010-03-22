@@ -24,7 +24,7 @@ describe "AST" do
   end
 
   it "should raise an error when symbol is undefined" do
-    lambda { :x.evaluate }.should raise_error
+    lambda { :x.evaluate }.should raise_error(RuntimeError, 'Unbound symbol: x')
   end
 
   it "should apply the function inside of a list" do

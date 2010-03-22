@@ -15,7 +15,7 @@ module SymbolEvaluation
     if env.send bound_pred, self
       env[self]
     else
-      raise "Unbound symbol \"#{ self }\"."
+      raise "Unbound symbol: #{self}"
     end
   end
 end
