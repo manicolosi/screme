@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../lib/screme.rb'
 
 describe "Arithmetic" do
-  describe "(addition: +)" do
+  describe "Addition: +" do
     specify "with no operands returns the additive identity" do
       input = '(+)'
       evaluate(input).should == 0
@@ -21,7 +21,7 @@ describe "Arithmetic" do
     end
   end
 
-  describe "(subtraction: -)" do
+  describe "Subtraction: -" do
     specify "with no arguments raises an error" do
       pending "function arity checking"
     end
@@ -40,7 +40,7 @@ describe "Arithmetic" do
     end
   end
 
-  describe "(multiplication: *)" do
+  describe "Multiplication: *" do
     specify "with no arguments returns the multiplicative identity" do
       input = '(*)'
       evaluate(input).should == 1
@@ -60,7 +60,7 @@ describe "Arithmetic" do
     end
   end
 
-  describe "(division: /)" do
+  describe "Division: /" do
     specify "with one operand returns the multiplicative inverse" do
       input = '(/ 3)'
       evaluate(input).should == Rational(1, 3)

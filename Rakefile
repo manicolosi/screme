@@ -9,6 +9,6 @@ end
 
 Spec::Rake::SpecTask.new(:test) do |t|
   t.spec_files = FileList['spec/*.rb']
-  t.spec_opts = ['--format', 'specdoc', '--color']
+  t.spec_opts = ['--format', 'nested', '--color']
 end
 
