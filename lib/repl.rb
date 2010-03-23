@@ -7,7 +7,8 @@ class Repl
     @interpreter = ScremeInterpreter.new
 
     Readline.completion_proc = proc do |s|
-      @interpreter.env.bindings.map(&:to_s).grep /^#{Regexp.escape(s)}/
+      identifiers = @interpreter.env.bindings.keys
+      identifiers.map(&:to_s).grep /^#{Regexp.escape(s)}/
     end
   end
 
