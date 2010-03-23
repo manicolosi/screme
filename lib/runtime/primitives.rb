@@ -47,12 +47,16 @@ class Primitives < ScremeForms
     [[:lambda, variables, body], *inits].evaluate(env)
   end
 
-  define(:atom?) { |expr| expr.atom? }
-
   define_special(:if) do |env, condition, then_expr, else_expr|
     expr = condition.evaluate(env) ? then_expr : else_expr
     expr.evaluate(env)
   end
+
+  define(:"ruby-const") do |symbol|
+    Kernel.const_get(symbol)
+  end
+
+  define(:atom?) { |expr| expr.atom? }
 
   define(:+) { |*z| z.reduce(&:+) || 0 }
   define(:*) { |*z| z.reduce(&:*) || 1 }
