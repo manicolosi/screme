@@ -18,7 +18,7 @@ grammar Screme
   end
 
   rule boolean
-    ('#t' / '#f') <BooleanNode>
+    ('#t' / '#f' ) !identifier <BooleanNode>
   end
 
   rule integer

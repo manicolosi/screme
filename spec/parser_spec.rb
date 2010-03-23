@@ -42,6 +42,11 @@ describe Parser do
     parse(input).should == [true, false, true]
   end
 
+  it "should not parse identifiers beginning with #t and #f as #t and #f" do
+    input = '(#fast-food #taco-bell)'
+    parse(input).should == [:"#fast-food", :"#taco-bell"]
+  end
+
   it "should parse a list of integers, strings, and symbols" do
     input = '(1 "two" three)'
     parse(input).should == [1, "two", :three]
