@@ -11,16 +11,16 @@ module Representations
     end
   end
 
-  module StringRepresentation
+  module InspectRepresentation
     def representation
       inspect
     end
   end
 
+  Object.send :include, Representations::InspectRepresentation
+  Array.send :include, Representations::ListRepresentation
+
   [ Fixnum, Rational, Symbol ].each do |klass|
     klass.send :include, Representations::SimpleRepresentation
   end
-
-  Array.send  :include, Representations::ListRepresentation
-  String.send :include, Representations::StringRepresentation
 end
