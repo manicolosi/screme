@@ -1,13 +1,6 @@
 class Function < Proc
-  def initialize(params = nil, body = nil, &block)
-    if block_given?
-      super(&block)
-    else
-      super do |env, *args|
-        env2 = { params[0] => args[0], params[1] => args[1] }
-        body.eval(env2)
-      end
-    end
+  def initialize(&block)
+    super(&block)
   end
 
   def self.lambda(env, formals, body)
