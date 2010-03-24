@@ -58,6 +58,10 @@ class Primitives < ScremeForms
     [:if, a, b, false].evaluate(env)
   end
 
+  define(:not) do |a|
+    !a
+  end
+
   define(:"=") { |*z| z.reduce(&:"==") }
 
   define(:rational) {|num, den| Rational(num, den)}
