@@ -54,6 +54,11 @@ class Primitives < ScremeForms
     expr.evaluate(env)
   end
 
+  define_special(:and) do |env, a, b|
+    [:if, a, b, false].evaluate(env)
+  end
+
+  define(:"=") { |*z| z.reduce(&:"==") }
   define(:+) { |*z| z.reduce(&:+) || 0 }
   define(:*) { |*z| z.reduce(&:*) || 1 }
 
