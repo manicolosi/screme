@@ -1,5 +1,13 @@
 (context "Arithmetic"
 
+  (context "Numeric Equality (=)"
+    (assert "returns #t when all arguments are numerically equal"
+            (= (+ 2 3) (+ 4 1)))
+    (assert "works with any number of arguments"
+            (= 5 5 5))
+    (assert "returns #f otherwise"
+            (not (= 5 4)))
+  )
   (context "Addition (+)"
     (assert "with no operands returns the additive identity"
             (= 0 (+)))
