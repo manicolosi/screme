@@ -8,9 +8,12 @@ require 'forwardable'
 end
 
 class ScremeInterpreter
-  extend Forwardable
 
   attr_reader :env
+
+
+  extend Forwardable
+  def_delegators :@env, :define, :define_special
 
   def initialize
     @env = Environment.new
