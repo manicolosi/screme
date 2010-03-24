@@ -59,6 +59,9 @@ class Primitives < ScremeForms
   end
 
   define(:"=") { |*z| z.reduce(&:"==") }
+
+  define(:rational) {|num, den| Rational(num, den)}
+
   define(:+) { |*z| z.reduce(&:+) || 0 }
   define(:*) { |*z| z.reduce(&:*) || 1 }
 
