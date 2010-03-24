@@ -1,3 +1,9 @@
+* Test Framework
+  - Rewritten in Screme
+  - Allow multiple <test>s per (assert)
+  - Better failure messages
+  - Exception handling
+
 * Lambda
   - Check argument size
   - Allow multiple expressions in body:
