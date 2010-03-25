@@ -54,6 +54,20 @@ class Primitives < ScremeForms
     expr.evaluate(env)
   end
 
+  define_special(:and) do |env, a, b|
+    [:if, a, b, false].evaluate(env)
+  end
+
+  define(:not) do |a|
+    !a
+  end
+
+  define(:rational) {|num, den| Rational(num, den)}
+
+  define(:"=") do |*z|
+    !!z.reduce { |acc, a| acc if acc == a }
+  end
+
   define(:+) { |*z| z.reduce(&:+) || 0 }
   define(:*) { |*z| z.reduce(&:*) || 1 }
 
