@@ -20,12 +20,19 @@ class SchemeRepl
   def run
     reset_prompt
 
-    while line = Readline.readline(@prompt, true)
+    while line = Readline.readline(@prompt, false)
       begin
         @lines << line
         input = @lines.join("\n")
+
         lparens, rparens = *count_parens(input)
         if lparens == rparens
+
+          unless /\n +/ =~ input
+            input.gsub!(/\n/, "\n" + " " * 9)
+          end
+
+          Readline::HISTORY.push(input)
           reset_prompt
           display_result(eval(input))
         elsif lparens > rparens
