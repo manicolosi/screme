@@ -63,6 +63,12 @@ describe Parser do
     parse(input).should == [:quote, [:a, 1, :b, 2, :c, 3]]
   end
 
+  it "should ignore leading spaces" do
+    input = '(+ 2
+                3)'
+    parse(input).should == [:+, 2, 3]
+  end
+
   def parse(input)
     Parser.new.parse(input)
   end
