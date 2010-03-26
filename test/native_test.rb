@@ -16,21 +16,16 @@ class NativeTest
       end
 
       i.define_special(:assert) do |env, description, *bodies|
-        failures = bodies.reject do |body|
-          body.evaluate(env) == true
-        end
-
-        if failures.length > 0
-          fail(description, failures)
+        if bodies.empty?
+          pending(description)
         else
-          pass(description)
+          failures = bodies.reject { |body| body.evaluate(env) == true }
+          if failures.empty?
+            pass(description)
+          else
+            fail(description, failures)
+          end
         end
-      end
-
-      i.define_special(:pending) do |env, descript, pending_on|
-        show :yellow, '*', descript
-        pending_on = "not implemented" unless pending_on.is_a? String
-        show :yellow, ' ', "PENDING: #{ pending_on }"
       end
 
       input = File.open(file).lines.to_a.to_s
@@ -39,6 +34,11 @@ class NativeTest
   end
 
   private
+
+  def self.pending(description)
+    show :yellow, '*', description
+    show :yellow, ' ', "PENDING: not implemented"
+  end
 
   def self.fail(description, bodies)
     show :red, '-', description

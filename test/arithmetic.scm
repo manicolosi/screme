@@ -15,8 +15,7 @@
             (= 18 (+ 3 4 5 6)))
   )
   (context "Subtraction (-)"
-    (pending "with no arguments raises an error"
-             "function arity checking")
+    (assert "with no arguments raises an error")
     (assert "with one operand returns the additive inverse"
             (= (- 3) (- 3)))
     (assert "works with any number of operands"
