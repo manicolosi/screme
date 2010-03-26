@@ -1,8 +1,8 @@
 grammar Screme
   rule expression
-    space
+    ignored*
     expr:(quoted / list / atom)
-    space <ExpressionNode>
+    ignored* <ExpressionNode>
   end
 
   rule quoted
@@ -33,19 +33,31 @@ grammar Screme
     (!delim .)+ <IdentifierNode>
   end
 
+  rule ignored
+    whitespace / comment
+  end
+
+  rule whitespace
+    space / newline
+  end
+
   rule delim
-    ws / paren
+    whitespace / paren
+  end
+
+  rule comment
+    ';' (!newline .)*
+  end
+
+  rule space
+    [\s\t]
+  end
+
+  rule newline
+    [\n\r]
   end
 
   rule paren
     [\(\)]
-  end
-
-  rule space
-    ws*
-  end
-
-  rule ws
-    [ \t\n]
   end
 end
