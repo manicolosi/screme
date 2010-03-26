@@ -7,7 +7,7 @@ class NativeTest
 
     interpreter = ScremeInterpreter.new.tap do |i|
       i.define_special(:context) do |env, descript, *asserts|
-        show :reset, '', descript
+        show_context descript
 
         @nesting += 1
         asserts.each {|a| a.evaluate(env)}
@@ -36,23 +36,50 @@ class NativeTest
   private
 
   def self.pending(description)
-    show :yellow, '*', description
-    show :yellow, ' ', "PENDING: not implemented"
+    show_example :pending, description
+    show_reason  :pending, 'not implemented'
   end
 
   def self.fail(description, bodies)
-    show :red, '-', description
-    bodies.each { |body| show :red, ' ', "FAILED: #{body.representation}" }
+    show_example :fail, description
+    bodies.each { |body| show_reason :fail, body.representation }
   end
 
   def self.pass(description)
-    show :green, '+', description
+    show_example :pass, description
   end
 
-  def self.show(color, prefix, text)
-    prefix += " " unless prefix == ""
-    prefix = (" " * @nesting) + prefix
-    puts Term::ANSIColor.send color, prefix + text
+  COLORS =  { :pass => :green, :fail => :red,     :pending => :yellow }
+  PREFIX =  { :pass => '+',    :fail => '-',      :pending => '*' }
+  REASONS = {                  :fail => 'FAILED', :pending => 'PENDING' }
+
+  def self.show_context(description)
+    puts nested_prefix + description
+  end
+
+  def self.show_example(status, description)
+    color  = COLORS[status]
+    prefix = PREFIX[status]
+    puts in_color(color, nested_prefix(prefix) + description)
+  end
+
+  def self.show_reason(status, reason)
+    color  = COLORS[status]
+    reason = "#{ REASONS[status] }: #{ reason }"
+    puts in_color(color, nested_prefix(' ') + reason)
+  end
+
+  def self.in_color(color, text)
+    Term::ANSIColor.send color, text
+  end
+
+  def self.nested_prefix(prefix = '')
+    leading_ws = ' ' * @nesting
+    if prefix.empty?
+      leading_ws
+    else
+      leading_ws + prefix + ' '
+    end
   end
 end
 
