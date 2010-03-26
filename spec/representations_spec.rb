@@ -5,6 +5,11 @@ describe "Representation" do
     4.representation.should == '4'
   end
 
+  specify "true and false are represented as #t and #f" do
+    true.representation.should == '#t'
+    false.representation.should == '#f'
+  end
+
   specify "identifiers are represented as themselves" do
     :xyz.representation.should == 'xyz'
   end

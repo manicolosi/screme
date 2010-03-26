@@ -40,7 +40,7 @@ module ScremeExtensions
   end
 end
 
-[ Fixnum, String, Symbol ].each do |klass|
+[ Fixnum, String, Symbol, TrueClass, FalseClass ].each do |klass|
   klass.send :include, ScremeExtensions::Atom
 end
 

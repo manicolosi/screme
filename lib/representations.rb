@@ -17,8 +17,18 @@ module Representations
     end
   end
 
+  module BooleanRepresentation
+    def representation
+      self == true ? '#t' : '#f'
+    end
+  end
+
   Object.send :include, Representations::InspectRepresentation
   Array.send :include, Representations::ListRepresentation
+
+  [ TrueClass, FalseClass ].each do |klass|
+    klass.send :include, Representations::BooleanRepresentation
+  end
 
   [ Fixnum, Rational, Symbol ].each do |klass|
     klass.send :include, Representations::SimpleRepresentation
