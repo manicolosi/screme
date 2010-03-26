@@ -15,18 +15,16 @@ class NativeTest
         print "\n" unless @nesting > 0
       end
 
-      i.define_special(:assert) do |env, descript, expr|
-        [[:if, [:'=', true, expr], :pass, :fail],
-          descript, [:quote, expr]].evaluate(env)
-      end
+      i.define_special(:assert) do |env, description, *bodies|
+        failures = bodies.reject do |body|
+          body.evaluate(env) == true
+        end
 
-      i.define(:pass) do |descript, expr|
-        show :green, '+', descript
-      end
-
-      i.define(:fail) do |descript, expr|
-        show :red, '-', descript
-        show :red, ' ', "FAILED: #{ expr.representation }"
+        if failures.length > 0
+          fail(description, failures)
+        else
+          pass(description)
+        end
       end
 
       i.define_special(:pending) do |env, descript, pending_on|
@@ -41,6 +39,15 @@ class NativeTest
   end
 
   private
+
+  def self.fail(description, bodies)
+    show :red, '-', description
+    bodies.each { |body| show :red, ' ', "FAILED: #{body.representation}" }
+  end
+
+  def self.pass(description)
+    show :green, '+', description
+  end
 
   def self.show(color, prefix, text)
     prefix += " " unless prefix == ""
