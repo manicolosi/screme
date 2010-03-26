@@ -63,6 +63,26 @@ describe Parser do
     parse(input).should == [:quote, [:a, 1, :b, 2, :c, 3]]
   end
 
+  describe "Commenting" do
+    it "should ignore lines beginning with comments" do
+      input = "; a lovely comment
+               (+ 1 2 3)"
+      parse(input).should == [:+, 1, 2, 3]
+    end
+
+    it "should ignore comments at the end of lines" do
+      input = "(+ 1 2 3) ; a lovely comment"
+      parse(input).should == [:+, 1, 2, 3]
+    end
+
+    it "should ignore comments in the middle of an expression" do
+      input = "(+ 1
+                  ; 2
+                  3)"
+      parse(input).should == [:+, 1, 3]
+    end
+  end
+
   def parse(input)
     Parser.new.parse(input)
   end
