@@ -29,5 +29,14 @@
                `(5 (7 ,(* 2 5) 13) 15)))
     (assert "(unquote <expr>) may be abbreviated ,<expr>"
             (= '(list 3 4) `(list ,(+ 1 2) 4)))
+    (assert "(unquote-splicing <list>) inserts list into surround list"
+            (= '(1 2 3 4 5)
+               `(1 (unquote-splicing '(2 3 4)) 5)))
+    (assert "(unquote-splicing <list>) may be abbreviated ,@<list>"
+            (= '(1 2 3 4 5)
+               `(1 ,@'(2 3 4) 5)))
+    (assert "(unquote-splicing <list> works when nested deeply"
+            (= '(5 (7 2 5 13) 15)
+               `(5 (7 ,@'(2 5) 13) 15)))
   )
 )
