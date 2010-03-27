@@ -24,13 +24,18 @@ describe "AST" do
   end
 
   it "should raise an error when symbol is undefined" do
-    lambda { :x.evaluate }.should raise_error
+    lambda { :x.evaluate }.should raise_error(RuntimeError, 'Unbound symbol: x')
   end
 
   it "should apply the function inside of a list" do
     env = {:+ => lambda {|env, a, b| a + b} }
     ast = [:+, 2, 3]
     ast.evaluate(env).should == 5
+  end
+
+  it "should raise an error if the list's car isn't a function" do
+    ast = ["+", 2, 3]
+    lambda { ast.evaluate }.should raise_error(RuntimeError, 'Can\'t apply: "+"')
   end
 
   it "should evaluate arguments before applying a function" do
