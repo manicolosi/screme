@@ -7,22 +7,24 @@ require 'forwardable'
   require file
 end
 
-class ScremeInterpreter
+module Screme
+  class ScremeInterpreter
 
-  attr_reader :env
+    attr_reader :env
 
 
-  extend Forwardable
-  def_delegators :@env, :define, :define_special
+    extend Forwardable
+    def_delegators :@env, :define, :define_special
 
-  def initialize
-    @env = Environment.new
-    @parser = Parser.new
+    def initialize
+      @env = Environment.new
+      @parser = Parser.new
 
-    @env.load(Primitives)
-  end
+      @env.load(Primitives)
+    end
 
-  def parse_and_eval(input)
-    @parser.parse(input).evaluate(@env)
+    def parse_and_eval(input)
+      @parser.parse(input).evaluate(@env)
+    end
   end
 end
