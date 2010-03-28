@@ -6,6 +6,11 @@ describe "Parser" do
     parse(input).should == 123
   end
 
+  it "should parse negative integers as negative Ruby integers" do
+    input = '-123'
+    parse(input).should == -123
+  end
+
   it "should parse string atom expressions as Ruby strings" do
     input = '"Hello world"'
     parse(input).should == "Hello world"
@@ -27,8 +32,8 @@ describe "Parser" do
   end
 
   it "should parse a list of integers as a Ruby list of Ruby integers" do
-    input = '(123 456 789)'
-    parse(input).should == [123, 456, 789]
+    input = '(123 -456 789)'
+    parse(input).should == [123, -456, 789]
   end
 
   it "should parse #t and #f booleans to the Ruby boolean types" do

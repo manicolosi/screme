@@ -22,7 +22,7 @@ grammar Screme
   end
 
   rule integer
-    ('0' / [1-9]) digits <Integer>
+    '-'? ('0' / [1-9]) digits <Integer>
   end
 
   rule string
