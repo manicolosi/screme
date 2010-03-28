@@ -2,15 +2,15 @@ grammar Screme
   rule expression
     ignored*
     expr:(quoted / list / atom)
-    ignored* <ExpressionNode>
+    ignored* <Expression>
   end
 
   rule quoted
-    quote:("'" / "`" / ",@" / ",") expression <QuotedNode>
+    quote:("'" / "`" / ",@" / ",") expression <Quoted>
   end
 
   rule list
-    '(' exprs:expression* ')' <ListNode>
+    '(' exprs:expression* ')' <List>
   end
 
   rule atom
@@ -18,32 +18,19 @@ grammar Screme
   end
 
   rule boolean
-    hash 't' <Boolean> {
-      def value
-        true
-      end
-    } /
-    hash 'f' <Boolean> {
-      def value
-        false
-      end
-    }
-  end
-
-  rule hash
-    '#'
+    hash ('t' / 'f') <Boolean>
   end
 
   rule integer
-    ('0' / [1-9] [0-9]*) <IntegerNode>
+    ('0' / [1-9]) digits <Integer>
   end
 
   rule string
-    '"' inner:('\\"' / [^"])* '"' <StringNode>
+    '"' ('\\"' / [^"])* '"' <String>
   end
 
   rule identifier
-    (!delim .)+ <IdentifierNode>
+    (!delim .)+ <Identifier>
   end
 
   rule ignored
@@ -60,6 +47,14 @@ grammar Screme
 
   rule comment
     ';' (!newline .)*
+  end
+
+  rule digits
+    [0-9]*
+  end
+
+  rule hash
+    '#'
   end
 
   rule space

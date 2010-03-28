@@ -3,15 +3,15 @@ require 'treetop'
 module Screme
   Node = Treetop::Runtime::SyntaxNode
 
-  module ExpressionNode
-    def to_ast
-      expr.to_ast
+  class Expression < Node
+    def value
+      expr.value
     end
   end
 
-  module QuotedNode
-    def to_ast
-      [quote_type, expression.to_ast]
+  class Quoted < Node
+    def value
+      [quote_type, expression.value]
     end
 
     def quote_type
@@ -24,32 +24,32 @@ module Screme
     end
   end
 
-  module ListNode
-    def to_ast
-      exprs.elements.map { |e| e.to_ast }
+  class List < Node
+    def value
+      exprs.elements.map { |e| e.value }
     end
   end
 
   class Boolean < Node
-    def to_ast
-      value
+    def value
+      text_value == '#t' ? true : false
     end
   end
 
-  module IntegerNode
-    def to_ast
+  class Integer < Node
+    def value
       text_value.to_i
     end
   end
 
-  module StringNode
-    def to_ast
-      inner.text_value.gsub('\"', '"').gsub('\\\\', '\\')
+  class String < Node
+    def value
+      text_value.gsub('\\"', '"').gsub('\\\\', '\\').gsub(/^"|"$/, '')
     end
   end
 
-  module IdentifierNode
-    def to_ast
+  class Identifier < Node
+    def value
       text_value.to_sym
     end
   end
@@ -58,7 +58,7 @@ module Screme
 
   class Parser < ScremeParser
     def parse(str)
-      super.to_ast
+      super.value
     end
   end
 end
