@@ -2,27 +2,29 @@ $: << File.dirname(__FILE__)
 
 require 'forwardable'
 
-%w[ ast environment extensions function parser syntax
-    representations runtime/primitives ].each do |file|
+%w[ ast environment extensions function syntax representations
+    parser/parser runtime/primitives ].each do |file|
   require file
 end
 
-class ScremeInterpreter
+module Screme
+  class Interpreter
 
-  attr_reader :env
+    attr_reader :env
 
 
-  extend Forwardable
-  def_delegators :@env, :define, :define_special
+    extend Forwardable
+    def_delegators :@env, :define, :define_special
 
-  def initialize
-    @env = Environment.new
-    @parser = Parser.new
+    def initialize
+      @env = Environment.new
+      @parser = Parser.new
 
-    @env.load(Primitives)
-  end
+      @env.load(Primitives)
+    end
 
-  def parse_and_eval(input)
-    @parser.parse(input).evaluate(@env)
+    def parse_and_eval(input)
+      @parser.parse(input).evaluate(@env)
+    end
   end
 end

@@ -17,10 +17,10 @@
   (context "Subtraction (-)"
     (assert "with no arguments raises an error")
     (assert "with one operand returns the additive inverse"
-            (= (- 3) (- 3)))
+            (= -3 (- 3)))
     (assert "works with any number of operands"
-            (= (- 1) (- 3 4))
-            (= (- 6) (- 3 4 5)))
+            (= -1 (- 3 4))
+            (= -6 (- 3 4 5)))
   )
   (context "Multiplication (*)"
     (assert "with no arguments returns the multiplicative identity"
