@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../lib/screme.rb'
 
-describe Parser do
+describe "Parser" do
   it "should parse integer atom expressions as Ruby integers" do
     input = '123'
     parse(input).should == 123
@@ -90,6 +90,6 @@ describe Parser do
   end
 
   def parse(input)
-    Parser.new.parse(input)
+    Screme::Parser.new.parse(input)
   end
 end

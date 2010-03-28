@@ -18,7 +18,20 @@ grammar Screme
   end
 
   rule boolean
-    ('#t' / '#f') <BooleanNode>
+    hash 't' <Boolean> {
+      def value
+        true
+      end
+    } /
+    hash 'f' <Boolean> {
+      def value
+        false
+      end
+    }
+  end
+
+  rule hash
+    '#'
   end
 
   rule integer
