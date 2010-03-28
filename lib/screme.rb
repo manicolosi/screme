@@ -8,7 +8,7 @@ require 'forwardable'
 end
 
 module Screme
-  class ScremeInterpreter
+  class Interpreter
 
     attr_reader :env
 

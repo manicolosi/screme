@@ -5,7 +5,7 @@ class NativeTest
   def self.run(file)
     @nesting = 0
 
-    interpreter = ScremeInterpreter.new.tap do |i|
+    interpreter = Screme::Interpreter.new.tap do |i|
       i.define_special(:context) do |env, descript, *asserts|
         show_context descript
 

@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/screme'
 module Screme
   class Repl
     def initialize
-      @interpreter = ScremeInterpreter.new
+      @interpreter = Interpreter.new
 
       Readline.completion_proc = proc do |s|
         identifiers = @interpreter.env.bindings.keys
