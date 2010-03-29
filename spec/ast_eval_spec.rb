@@ -17,6 +17,11 @@ describe "AST" do
     ast.evaluate(env).should == 5
   end
 
+  it "should be able to evaluate rationals" do
+    ast = Rational(1, 3)
+    ast.evaluate.should == Rational(1, 3)
+  end
+
   it "should take an optional environment for self-evaluating expressions" do
     env = {}
     123.evaluate(env).should == 123

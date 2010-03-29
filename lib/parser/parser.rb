@@ -42,6 +42,12 @@ module Screme
     end
   end
 
+  class Rational < Node
+    def value
+      Rational *text_value.split('/').map(&:to_i)
+    end
+  end
+
   class String < Node
     def value
       text_value.gsub('\\"', '"').gsub('\\\\', '\\').gsub(/^"|"$/, '')
@@ -58,7 +64,10 @@ module Screme
 
   class Parser < ScremeParser
     def parse(str)
-      super.value
+      syntax = super
+      raise "Syntax Error: #{ str }" if syntax.nil?
+
+      syntax.value
     end
   end
 end

@@ -74,7 +74,14 @@ describe "Parser" do
     parse(input).should == [:+, 2, 3]
   end
 
-  describe "Commenting" do
+  describe "Rationals" do
+    specify "are parsed as Ruby rationals" do
+      input = '1/3'
+      parse(input).should == Rational(1,3)
+    end
+  end
+
+  describe "Comments" do
     it "should ignore lines beginning with comments" do
       input = "; a lovely comment
                (+ 1 2 3)"
