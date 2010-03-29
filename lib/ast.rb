@@ -27,7 +27,7 @@ module FunctionApplicationEvaluation
 
     fn.call env, *args
   rescue NoMethodError
-    raise "Can't apply: #{fn.representation}"
+    raise "Can't apply: #{fn.scm_inspect}"
   end
 end
 

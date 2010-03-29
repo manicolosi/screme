@@ -72,7 +72,7 @@ module Screme
     end
 
     def display_result(result)
-      puts result.representation unless result.nil?
+      puts result.scm_inspect unless result.nil?
     end
   end
 end
