@@ -54,11 +54,17 @@ module Screme
     end
   end
 
+  class SyntaxError < RuntimeError
+  end
+
   Treetop.load File.dirname(__FILE__) + '/screme.tt'
 
   class Parser < ScremeParser
     def parse(str)
-      super.value
+      syntax = super
+      raise SyntaxError, "\"#{ str }\""  if syntax.nil?
+
+      syntax.value
     end
   end
 end

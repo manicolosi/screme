@@ -30,11 +30,11 @@ module Screme
           elsif l > r
             @prompt = '... '
           else
-            raise 'Unexpected right parenthesis'
+            raise SyntaxError, 'Unexpected right parenthesis'
           end
 
         rescue Exception => e
-          puts "Error: #{e.inspect}"
+          puts "#{e.class}: #{e.to_s}"
           reset
         end
       end
