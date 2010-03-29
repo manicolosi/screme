@@ -42,6 +42,12 @@ module Screme
     end
   end
 
+  class Rational < Node
+    def value
+      Rational *text_value.split('/').map(&:to_i)
+    end
+  end
+
   class String < Node
     def value
       text_value.gsub('\\"', '"').gsub('\\\\', '\\').gsub(/^"|"$/, '')

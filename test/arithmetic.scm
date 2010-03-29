@@ -33,9 +33,9 @@
   )
   (context "Division (/)"
     (assert "with one operand returns the multiplicative inverse"
-            (= (rational 1 3) (/ 3)))
+            (= 1/3 (/ 3)))
     (assert "works with any number of operands"
-            (= (rational 3 4) (/ 3 4))
-            (= (rational 3 20) (/ 3 4 5)))
+            (= 3/4 (/ 3 4))
+            (= 3/20 (/ 3 4 5)))
   )
 )

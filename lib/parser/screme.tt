@@ -14,15 +14,23 @@ grammar Screme
   end
 
   rule atom
-    boolean / integer / string / identifier
+    boolean / number / string / identifier
   end
 
   rule boolean
     hash ('t' / 'f') <Boolean>
   end
 
+  rule number
+    rational / integer
+  end
+
   rule integer
-    '-'? ('0' / [1-9]) digits <Integer>
+    '-'? ('0' / [1-9]) digit* <Integer>
+  end
+
+  rule rational
+    digit+ '/' digit+ <Rational>
   end
 
   rule string
@@ -49,8 +57,8 @@ grammar Screme
     ';' (!newline .)*
   end
 
-  rule digits
-    [0-9]*
+  rule digit
+    [0-9]
   end
 
   rule hash

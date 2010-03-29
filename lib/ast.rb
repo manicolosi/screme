@@ -31,9 +31,9 @@ module FunctionApplicationEvaluation
   end
 end
 
-Fixnum.send :include, SelfEvaluation
-String.send :include, SelfEvaluation
-TrueClass.send :include, SelfEvaluation
-FalseClass.send :include, SelfEvaluation
+[ Fixnum, Rational, String, TrueClass, FalseClass ].each do |klass|
+  klass.send :include, SelfEvaluation
+end
+
 Symbol.send :include, SymbolEvaluation
 Array.send  :include, FunctionApplicationEvaluation

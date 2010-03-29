@@ -62,8 +62,6 @@ class Primitives < ScremeForms
     !a
   end
 
-  define(:rational) {|num, den| Rational(num, den)}
-
   define(:"=") do |*z|
     !!z.reduce { |acc, a| acc if acc == a }
   end
