@@ -1,3 +1,15 @@
+class Program
+  attr_reader :expressions
+
+  def initialize(expressions)
+    @expressions = expressions
+  end
+
+  def evaluate(env)
+    @expressions.map {|expr| expr.evaluate(env)}.last
+  end
+end
+
 module SelfEvaluation
   def evaluate(env = nil)
     self
