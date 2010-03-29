@@ -1,16 +1,20 @@
 grammar Screme
+  rule program
+    expression+ <Parser::Program>
+  end
+
   rule expression
     ignored*
     expr:(quoted / list / atom)
-    ignored* <Expression>
+    ignored* <Parser::Expression>
   end
 
   rule quoted
-    quote:("'" / "`" / ",@" / ",") expression <Quoted>
+    quote:("'" / "`" / ",@" / ",") expression <Parser::Quoted>
   end
 
   rule list
-    '(' exprs:expression* ')' <List>
+    '(' exprs:expression* ')' <Parser::List>
   end
 
   rule atom
@@ -18,7 +22,7 @@ grammar Screme
   end
 
   rule boolean
-    hash ('t' / 'f') <Boolean>
+    hash ('t' / 'f') <Parser::Boolean>
   end
 
   rule number
@@ -26,19 +30,19 @@ grammar Screme
   end
 
   rule integer
-    '-'? ('0' / [1-9]) digit* <Integer>
+    '-'? ('0' / [1-9]) digit* <Parser::Integer>
   end
 
   rule rational
-    digit+ '/' digit+ <Rational>
+    digit+ '/' digit+ <Parser::Rational>
   end
 
   rule string
-    '"' ('\\"' / [^"])* '"' <String>
+    '"' ('\\"' / [^"])* '"' <Parser::String>
   end
 
   rule identifier
-    (!delim .)+ <Identifier>
+    (!delim .)+ <Parser::Identifier>
   end
 
   rule ignored
