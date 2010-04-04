@@ -34,7 +34,7 @@ grammar Screme
   end
 
   rule dec_integer
-    '-'? ('0' / [1-9]) digit* <Parser::Integer> {
+    '-'? digit+ <Parser::Integer> {
       def base
         10
       end
