@@ -30,7 +30,31 @@ grammar Screme
   end
 
   rule integer
-    '-'? ('0' / [1-9]) digit* <Parser::Integer>
+    dec_integer / hex_integer
+  end
+
+  rule dec_integer
+    '-'? ('0' / [1-9]) digit* <Parser::Integer> {
+      def base
+        10
+      end
+    }
+  end
+
+  rule hex_integer
+    hash 'x' hex_digit+ <Parser::Integer> {
+      def base
+        16
+      end
+    }
+  end
+
+  rule digit
+    [0-9]
+  end
+
+  rule hex_digit
+    [a-fA-F] / digit
   end
 
   rule rational
@@ -59,10 +83,6 @@ grammar Screme
 
   rule comment
     ';' (!newline .)*
-  end
-
-  rule digit
-    [0-9]
   end
 
   rule hash

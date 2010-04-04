@@ -56,7 +56,7 @@ module Screme
 
     class Integer < Node
       def value
-        text_value.to_i
+        text_value.gsub(/^#./, '').to_i(base)
       end
     end
 

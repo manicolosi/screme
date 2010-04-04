@@ -1,6 +1,23 @@
 require File.dirname(__FILE__) + '/../lib/screme.rb'
 
 describe "Parser" do
+  describe "Numbers" do
+    specify 'can parse hex numbers (no letters)' do
+      input = '#x10'
+      parse(input).expressions[0].should == 16
+    end
+
+    specify 'can parse hex numbers (letters)' do
+      input = '#xff'
+      parse(input).expressions[0].should == 255
+    end
+
+    specify 'can parse hex numbers (case insensitive)' do
+      input = '#xDeadBeef'
+      parse(input).expressions[0].should == 0xdeadbeef
+    end
+  end
+
   it "should parse integer atom expressions as Ruby integers" do
     input = '123'
     parse(input).expressions[0].should == 123
