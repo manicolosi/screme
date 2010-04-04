@@ -30,7 +30,7 @@ grammar Screme
   end
 
   rule integer
-    dec_integer / hex_integer
+    dec_integer / hex_integer / oct_integer / bin_integer
   end
 
   rule dec_integer
@@ -49,12 +49,36 @@ grammar Screme
     }
   end
 
+  rule oct_integer
+    hash 'o' oct_digit+ <Parser::Integer> {
+      def base
+        8
+      end
+    }
+  end
+
+  rule bin_integer
+    hash 'b' bin_digit+ <Parser::Integer> {
+      def base
+        2
+      end
+    }
+  end
+
   rule digit
     [0-9]
   end
 
   rule hex_digit
     [a-fA-F] / digit
+  end
+
+  rule oct_digit
+    [0-7]
+  end
+
+  rule bin_digit
+    [0-1]
   end
 
   rule rational

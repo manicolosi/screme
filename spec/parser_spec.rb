@@ -16,6 +16,16 @@ describe "Parser" do
       input = '#xDeadBeef'
       parse(input).expressions[0].should == 0xdeadbeef
     end
+
+    specify 'can parse binary numbers' do
+      input = '#b10'
+      parse(input).expressions[0].should == 2
+    end
+
+    specify 'can parse octal numbers' do
+      input = '#o10'
+      parse(input).expressions[0].should == 8
+    end
   end
 
   it "should parse integer atom expressions as Ruby integers" do
