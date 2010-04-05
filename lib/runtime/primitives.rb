@@ -35,18 +35,21 @@ module Screme
       end
 
       define_special(:let) do |env, bindings, body|
-        # TODO: Shouldn't have to convert these pairs to arrays. Even
-        # better this should be implemented as a macro.
+        # TODO: Implement as macro
         bindings = bindings.to_a
-        variables = bindings.map(&:first)
-        inits     = bindings.map(&:last)
+
+        variables = bindings.map(&:car)
+        inits     = bindings.map(&:cadr)
 
         [[:lambda, variables, body], *inits].evaluate(env)
       end
 
       ## List functions
       define(:cons) { |a, b| Runtime::Pair.new a, b }
-      define(:car) { |pair| pair.car }
+      define(:car) { |pair|
+        puts pair.class
+        pair.car
+      }
       define(:cdr) { |pair| pair.cdr }
 
       ## Predicates

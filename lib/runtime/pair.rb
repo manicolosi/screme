@@ -7,13 +7,21 @@ module Screme
       attr_reader :car, :cdr
 
       def self.from_a(a)
+        return nil if a.empty?
+
         car = a[0]
-        cdr = a[1..-1]
-        new car, cdr.empty? ? nil : from_a(cdr)
+        car = from_a car if Array === car
+        cdr = from_a a[1..-1]
+
+        new car, cdr
       end
 
       def initialize(car, cdr)
         @car, @cdr = car, cdr
+      end
+
+      def cadr
+        cdr.car
       end
 
       def scm_inspect(parens = true)
@@ -51,19 +59,6 @@ module Screme
       def each
         yield car
         cdr.each { |obj| yield obj } if Pair === cdr
-      end
-
-      def to_a
-        a = []
-        each do |obj|
-          if Pair === obj
-            a << obj.to_a
-          else
-            a << obj
-          end
-        end
-
-        a
       end
 
       def ==(other)

@@ -14,8 +14,10 @@
     (assert "(cons <obj1> <obj2>) constructs a pair"
             (pair? (cons 'a 'b)))
     (assert "(car <pair>) retrieves the car of a pair"
-            (= 'a (car (cons 'a 'b))))
+            (= 'a (car (cons 'a 'b)))
+            (= 1 (car '(1 2))))
     (assert "(cdr <pair>) retrieves the cdr of a pair"
-            (= 'b (cdr (cons 'a 'b))))
+            (= 'b (cdr (cons 'a 'b)))
+            (= '(2) (cdr '(1 2))))
   )
 )
