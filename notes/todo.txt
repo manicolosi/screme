@@ -1,8 +1,6 @@
 * Test Framework
   - Rewritten in Screme
-  - Allow multiple <test>s per (assert)
   - Better failure messages
-  - Exception handling
 
 * Lambda
   - Check argument size
@@ -10,6 +8,3 @@
     (define test (lambda (x y z)
       (x) (y) (z)))
     => expression3
-* Error handling
-  - Only show 10 lines of backtraces (show first 7, then "...," then the
-    last 3) or detect repetition
