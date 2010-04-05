@@ -11,12 +11,24 @@ describe "Pair" do
     @pair.cdr.should == :b
   end
 
-  specify "external representation should look like a Lisp list" do
-    @pair.scm_inspect.should == '(a . b)'
+  specify "can initialize from an Array" do
+    @pair = Pair.from_a [:a, :b]
+    @pair.car.should == :a
+    @pair.cdr.car.should == :b
+    @pair.cdr.cdr.should == nil
   end
 
-  specify "can initialize from an Array" do
-    pending
-    @pair = Cons.from_a [:a, :b]
+  specify "can convert back to an array" do
+    @pair = Pair.from_a [:a, :b, :c]
+    @pair.to_a.should == [:a, :b, :c]
+  end
+
+  specify "should implement equality" do
+    Pair.new(:a, :b).should == Pair.new(:a, :b)
+    Pair.new(:a, :b).should_not == Pair.new(:c, :d)
+  end
+
+  specify "external representation should look like a Lisp list" do
+    @pair.scm_inspect.should == '(a . b)'
   end
 end

@@ -2,7 +2,7 @@ module Screme
   module Inspectors
     module ListInspector
       def scm_inspect
-        '(' + map(&:scm_inspect).join(' ') + ')'
+        to_list.scm_inspect
       end
     end
 
@@ -31,7 +31,7 @@ module Screme
     end
 
     Object.send   :include, InspectInspector
-    Array.send    :include,  ListInspector
+    Array.send    :include, ListInspector
     NilClass.send :include, EmptyListInspector
 
     [ TrueClass, FalseClass ].each do |klass|
