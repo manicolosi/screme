@@ -51,3 +51,14 @@ nil   ; NicClass
 1..10  ; Range
 1...10 ; Range
 
+## Extensible Parser ##
+
+Should be able to modify the parser at runtime. Some of the advanced
+types above (like regexps and ranges) could be implemented like this.
+Some Lisps have reader macros. Guile takes it much further, though.
+
+With this sort of mechanism, programs that work with lots of units could
+look like this:
+
+(*-unit 1000ft 2mph) ; Time to travel 1000ft at 2mph
+
