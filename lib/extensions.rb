@@ -1,9 +1,5 @@
 module ScremeExtensions
   module Atom
-    def atom?
-      true
-    end
-
     def quasiquote(env)
       self
     end
@@ -11,10 +7,6 @@ module ScremeExtensions
 
   module List
     class SplicingList < Array
-    end
-
-    def atom?
-      false
     end
 
     def quasiquote(env)
@@ -45,4 +37,3 @@ end
 end
 
 Array.send  :include, ScremeExtensions::List
-
