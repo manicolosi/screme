@@ -16,15 +16,20 @@ class NativeTest
       end
 
       i.define_special(:assert) do |env, description, *bodies|
-        if bodies.empty?
-          pending(description)
-        else
-          failures = bodies.reject { |body| body.evaluate(env) == true }
-          if failures.empty?
-            pass(description)
+        begin
+          if bodies.empty?
+            pending(description)
           else
-            fail(description, failures)
+            failures = bodies.reject { |body| body.evaluate(env) == true }
+            if failures.empty?
+              pass(description)
+            else
+              fail(description, failures)
+            end
           end
+
+        rescue Exception => e
+          exception(description, e)
         end
       end
 
@@ -43,6 +48,11 @@ class NativeTest
   def self.fail(description, bodies)
     show_example :fail, description
     bodies.each { |body| show_reason :fail, body.scm_inspect }
+  end
+
+  def self.exception(description, e)
+    show_example :fail, description
+    show_reason  :fail, "#{e.class}: #{e.to_s}"
   end
 
   def self.pass(description)
