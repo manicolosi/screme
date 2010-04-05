@@ -32,14 +32,9 @@ module SymbolEvaluation
   end
 end
 
-module FunctionApplicationEvaluation
+module ArrayEvaluation
   def evaluate(env = {})
-    fn = first.evaluate(env)
-    args = self[1..-1]
-
-    fn.call env, *args
-  rescue NoMethodError
-    raise "Can't apply: (#{first.scm_inspect}) => #{fn.scm_inspect}"
+    to_list.evaluate(env)
   end
 end
 
@@ -48,4 +43,4 @@ end
 end
 
 Symbol.send :include, SymbolEvaluation
-Array.send  :include, FunctionApplicationEvaluation
+Array.send  :include, ArrayEvaluation

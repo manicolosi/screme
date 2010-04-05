@@ -9,6 +9,10 @@ module ScremeExtensions
     class SplicingList < Array
     end
 
+    def to_list
+      Screme::Runtime::Pair.from_a self
+    end
+
     def quasiquote(env)
       if first == :unquote
         self[1].evaluate(env)

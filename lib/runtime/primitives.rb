@@ -35,13 +35,9 @@ module Screme
       end
 
       define_special(:let) do |env, bindings, body|
-        variables = bindings.map(&:first)
-        inits     = bindings.map(&:last)
-
-        [[:lambda, variables, body], *inits].evaluate(env)
-      end
-
-      define_special(:let) do |env, bindings, body|
+        # TODO: Shouldn't have to convert these pairs to arrays. Even
+        # better this should be implemented as a macro.
+        bindings = bindings.to_a
         variables = bindings.map(&:first)
         inits     = bindings.map(&:last)
 
@@ -50,14 +46,14 @@ module Screme
 
       ## List functions
       define(:cons) { |a, b| Runtime::Pair.new a, b }
-      define(:car) { |cons| cons.car }
-      define(:cdr) { |cons| cons.cdr }
+      define(:car) { |pair| pair.car }
+      define(:cdr) { |pair| pair.cdr }
 
       ## Predicates
       define(:null?) { |obj| obj.nil? }
       define(:pair?) { |obj| Runtime::Pair === obj }
-      # TODO: Re-write in Screme
       define(:atom?) do |obj|
+        # TODO: Re-write in Screme
         [:and, [:not, [:pair?, [:quote, obj]]],
                [:not, [:null?, [:quote, obj]]]].evaluate(self.env)
       end
