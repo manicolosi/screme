@@ -20,7 +20,7 @@ module Screme
       @env = Environment.new
       @parser = Parser.new
 
-      @env.load(Primitives)
+      @env.load(Runtime::Primitives)
     end
 
     def parse_and_eval(input)

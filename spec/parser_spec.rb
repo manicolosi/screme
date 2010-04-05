@@ -36,6 +36,11 @@ describe "Parser" do
     parse(input).expressions[0].should == [123, -456, 789]
   end
 
+  it "should parse an empty list as Ruby nil" do
+    input = '()'
+    parse(input).expressions[0].should == nil
+  end
+
   it "should parse #t and #f booleans to the Ruby boolean types" do
     input = '#t'
     parse(input).expressions[0].should == true

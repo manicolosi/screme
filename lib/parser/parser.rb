@@ -44,7 +44,11 @@ module Screme
 
     class List < Node
       def value
-        exprs.elements.map { |e| e.value }
+        if exprs.elements.empty?
+          nil
+        else
+          exprs.elements.map { |e| e.value }
+        end
       end
     end
 

@@ -6,6 +6,12 @@ module Screme
       end
     end
 
+    module EmptyListInspector
+      def scm_inspect
+        '()'
+      end
+    end
+
     module SimpleInspector
       def scm_inspect
         to_s
@@ -24,8 +30,9 @@ module Screme
       end
     end
 
-    Object.send :include, InspectInspector
-    Array.send :include,  ListInspector
+    Object.send   :include, InspectInspector
+    Array.send    :include,  ListInspector
+    NilClass.send :include, EmptyListInspector
 
     [ TrueClass, FalseClass ].each do |klass|
       klass.send :include, BooleanInspector

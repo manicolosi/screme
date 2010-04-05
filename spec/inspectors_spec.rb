@@ -30,4 +30,8 @@ describe "Inspectors" do
   specify "rationals have a slash separating the numerator and denominator" do
     Rational(3, 4).scm_inspect.should == "3/4"
   end
+
+  specify "the empty list is represented by '()'" do
+    nil.scm_inspect.should == '()'
+  end
 end
