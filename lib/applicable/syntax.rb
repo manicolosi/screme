@@ -1,3 +1,2 @@
 class Syntax < Proc
 end
-

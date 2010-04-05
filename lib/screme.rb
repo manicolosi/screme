@@ -2,7 +2,8 @@ $: << File.dirname(__FILE__)
 
 require 'forwardable'
 
-%w[ ast environment extensions function syntax inspectors
+%w[ ast environment extensions inspectors
+    applicable/function applicable/macro applicable/syntax
     parser/parser runtime/primitives ].each do |file|
   require file
 end

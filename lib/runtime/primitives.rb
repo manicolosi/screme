@@ -21,6 +21,10 @@ class Primitives < ScremeForms
     env.define sym, expr.evaluate(env)
   end
 
+  define_special(:'define-macro') do |env, sym, transformer|
+    env.define sym, Macro.macro(env, transformer)
+  end
+
   define_special(:lambda) do |env, formals, body|
     Function.lambda(env, formals, body)
   end

@@ -1,8 +1,4 @@
 class Function < Proc
-  def initialize(&block)
-    super(&block)
-  end
-
   def self.lambda(env, formals, body)
     Function.new do |*args|
       new_env = Environment.new env
