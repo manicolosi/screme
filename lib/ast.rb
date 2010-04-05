@@ -34,7 +34,7 @@ end
 
 module ArrayEvaluation
   def evaluate(env = {})
-    Screme::Runtime::Pair.from_a(self).evaluate(env)
+    Screme::Runtime::Pair.list(self).evaluate(env)
   end
 end
 

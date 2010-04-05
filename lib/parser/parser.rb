@@ -47,7 +47,7 @@ module Screme
         if exprs.elements.empty?
           nil
         else
-          Runtime::Pair.from_a exprs.elements.map { |e| e.value }
+          Runtime::Pair.list exprs.elements.map { |e| e.value }
         end
       end
     end

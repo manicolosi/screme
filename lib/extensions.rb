@@ -6,6 +6,10 @@ module ScremeExtensions
   end
 
   module List
+    def to_list
+      Screme::Runtime::Pair.list self
+    end
+
     class SplicingList < Array
     end
 

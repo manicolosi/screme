@@ -6,12 +6,13 @@ module Screme
 
       attr_reader :car, :cdr
 
-      def self.from_a(a)
+      def self.list(a)
         return nil if a.empty?
 
         car = a[0]
-        car = from_a car if Array === car
-        cdr = from_a a[1..-1]
+        car = list car if Array === car
+
+        cdr = list a[1..-1]
 
         new car, cdr
       end

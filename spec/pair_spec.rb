@@ -12,14 +12,14 @@ describe "Pair" do
   end
 
   specify "can initialize from an Array" do
-    @pair = Pair.from_a [:a, :b]
+    @pair = Pair.list [:a, :b]
     @pair.car.should == :a
     @pair.cdr.car.should == :b
     @pair.cdr.cdr.should == nil
   end
 
   specify "can convert back to an array" do
-    @pair = Pair.from_a [:a, :b, :c]
+    @pair = Pair.list [:a, :b, :c]
     @pair.to_a.should == [:a, :b, :c]
   end
 

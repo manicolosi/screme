@@ -15,11 +15,11 @@ describe "Inspectors" do
   end
 
   specify "lists are enclosed in parentheses and separated by spaces" do
-    [1, 2, 3].scm_inspect.should == '(1 2 3)'
+    [1, 2, 3].to_list.scm_inspect.should == '(1 2 3)'
   end
 
   specify "lists show the representation of their elements" do
-    [1, :x, "test"].scm_inspect.should == '(1 x "test")'
+    [1, :x, "test"].to_list.scm_inspect.should == '(1 x "test")'
   end
 
   specify "strings are enclosed in quotation marks" do
