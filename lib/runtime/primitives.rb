@@ -55,6 +55,12 @@ module Screme
 
       ## Predicates
       define(:null?) { |obj| obj.nil? }
+      define(:pair?) { |obj| Runtime::Pair === obj }
+      # TODO: Re-write in Screme
+      define(:atom?) do |obj|
+        [:and, [:not, [:pair?, [:quote, obj]]],
+               [:not, [:null?, [:quote, obj]]]].evaluate(self.env)
+      end
 
       define_special(:if) do |env, condition, then_expr, else_expr|
         expr = condition.evaluate(env) ? then_expr : else_expr
