@@ -39,7 +39,7 @@ module FunctionApplicationEvaluation
 
     fn.call env, *args
   rescue NoMethodError
-    raise "Can't apply: #{fn.scm_inspect}"
+    raise "Can't apply: (#{first.scm_inspect}) => #{fn.scm_inspect}"
   end
 end
 

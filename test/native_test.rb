@@ -42,7 +42,7 @@ class NativeTest
 
   def self.fail(description, bodies)
     show_example :fail, description
-    bodies.each { |body| show_reason :fail, body.representation }
+    bodies.each { |body| show_reason :fail, body.scm_inspect }
   end
 
   def self.pass(description)
