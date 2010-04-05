@@ -46,10 +46,7 @@ module Screme
 
       ## List functions
       define(:cons) { |a, b| Runtime::Pair.new a, b }
-      define(:car) { |pair|
-        puts pair.class
-        pair.car
-      }
+      define(:car) { |pair| pair.car }
       define(:cdr) { |pair| pair.cdr }
 
       ## Predicates
