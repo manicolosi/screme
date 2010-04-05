@@ -8,3 +8,15 @@
     (define test (lambda (x y z)
       (x) (y) (z)))
     => expression3
+
+* Big cleanup
+  - Everything in Screme module
+  - Remove redudant module prefixes: Screme::Runtime::Pair
+* Implement a proper interpreter
+  - Runs a script if passed one
+  - Starts a REPL if no script is passed
+* IO
+  - (display)
+* Macros
+* Re-implement test framework in Screme
+  - Pending on interpreter, IO, and macros
