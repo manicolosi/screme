@@ -52,6 +52,12 @@ module Screme
       end
     end
 
+    class Datum < Node
+      def value
+        datum.value
+      end
+    end
+
     class Boolean < Node
       def value
         text_value == '#t' ? true : false

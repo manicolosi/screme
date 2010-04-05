@@ -18,7 +18,11 @@ grammar Screme
   end
 
   rule atom
-    boolean / number / string / identifier
+    datum / identifier
+  end
+
+  rule datum
+    datum:(boolean / number / string) !(!delim .) <Parser::Datum>
   end
 
   rule boolean
