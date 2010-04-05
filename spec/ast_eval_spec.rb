@@ -40,7 +40,8 @@ describe "AST" do
 
   it "should raise an error if the list's car isn't a function" do
     ast = ["+", 2, 3]
-    lambda { ast.evaluate }.should raise_error(RuntimeError, 'Can\'t apply: "+"')
+    lambda { ast.evaluate }.should raise_error(RuntimeError,
+                                               'Can\'t apply: ("+") => "+"')
   end
 
   it "should evaluate arguments before applying a function" do
