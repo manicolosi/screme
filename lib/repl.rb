@@ -72,7 +72,7 @@ module Screme
     end
 
     def display_result(result)
-      puts result.scm_inspect
+      puts "==> #{result.scm_inspect}"
     end
   end
 end

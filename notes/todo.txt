@@ -17,6 +17,11 @@
   - Starts a REPL if no script is passed
 * IO
   - (display)
+* Debugging
+  - http://home.vmathew.in/writings/common-lisp-repl-tools
+  - Tracing: (trace (fact 4))
+  - Timing: (time (fact 4))
+
 * Macros
 * Re-implement test framework in Screme
   - Pending on interpreter, IO, and macros

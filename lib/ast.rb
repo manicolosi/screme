@@ -1,3 +1,5 @@
+require 'rational'
+
 class Program
   attr_reader :expressions
 

@@ -44,6 +44,14 @@ module Screme
         [[:lambda, variables, body], *inits].evaluate(env)
       end
 
+      define(:do) do |*exprs|
+        exprs.last
+      end
+
+      define(:println) do |expr|
+        puts expr.scm_inspect
+      end
+
       ## List functions
       define(:cons) { |a, b| Runtime::Pair.new a, b }
       define(:car) { |pair| pair.car }
@@ -57,6 +65,8 @@ module Screme
         [:and, [:not, [:pair?, [:quote, obj]]],
                [:not, [:null?, [:quote, obj]]]].evaluate(self.env)
       end
+
+      define(:'str-len') { |str| str.length }
 
       define_special(:if) do |env, condition, then_expr, else_expr|
         expr = condition.evaluate(env) ? then_expr : else_expr
@@ -74,6 +84,9 @@ module Screme
       define(:"=") do |*z|
         !!z.reduce { |acc, a| acc if acc == a }
       end
+
+      define(:"<") { |a,b| a < b }
+      define(:">") { |a,b| a > b }
 
       define(:+) { |*z| z.reduce(&:+) || 0 }
       define(:*) { |*z| z.reduce(&:*) || 1 }
